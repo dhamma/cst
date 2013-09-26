@@ -1,6 +1,6 @@
 {
   "name": "kse_jiangkangyur",
-  "description": "Search Engine Demo for JiangKangyur",
+  "description": "Search Engine Demo for Tipitaka",
   "version": "0.2",
   "main": "index.html",
   "single-instance":true,
@@ -12,7 +12,7 @@
  "repositories": [
        {
             "type": "git", 
-            "url": "http://github.com/karmapa17/jiangkangyur.git"
+            "url": "http://github.com/yapcheahshen/cst.git"
        }  
     ]
 }
