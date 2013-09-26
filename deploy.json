@@ -1,0 +1,20 @@
+{
+	"files":[
+		"tipitaka/aura_components",
+		"tipitaka/css",
+		"tipitaka/index.js",
+		"tipitaka/index.html",
+		"tipitaka/package.json",
+		"tipitaka/config.json",
+		"tipitaka/LICENSE",
+		"tipitaka/README.md",
+		"tipitaka/vrimula.ydb",
+		"kse/aura_components"
+	],
+	"darwin" :[
+		"tipitaka/run.command"
+	],
+	"win32" :[
+		"tipitaka/run.cmd"
+	]	
+}
