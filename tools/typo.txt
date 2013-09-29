@@ -1,0 +1,4 @@
+﻿s0201a.att.xml::4910
+<p rend="subhead">6. mahāsaccakasutavaṇṇanā</p>
+to
+<p rend="subhead">6. mahāsaccakasuttavaṇṇanā</p>

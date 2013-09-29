@@ -1,4 +1,5 @@
 {
-	"db":"vrimula",
+	"db":"vrimul",
+	"linkto":["vriatt","vritik"],
 	"toc":["nikaya","book","sutra[id]"]
 }

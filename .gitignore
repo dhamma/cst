@@ -1,5 +1,7 @@
 tools/cst4xml-devanagari
 tools/cst4xml-romanized
+tools/splitted
+xml_
 *.ydb
 *.xml
 *.xml
