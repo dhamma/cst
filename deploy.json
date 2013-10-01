@@ -8,7 +8,9 @@
 		"tipitaka/config.json",
 		"tipitaka/LICENSE",
 		"tipitaka/README.md",
-		"tipitaka/vrimula.ydb",
+		"tipitaka/vrimul.ydb",
+		"tipitaka/vriatt.ydb",
+		"tipitaka/vritik.ydb",
 		"kse/aura_components"
 	],
 	"darwin" :[
