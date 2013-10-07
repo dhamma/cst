@@ -10,21 +10,8 @@
   </head>
   <body>
 
-<div class="mainview" style="overflow-x:hidden;">
-
-	<div class="row">
-  	<div class="col-3">
-      <div data-aura-widget="tofind-widget@kse"></div>
-      <div data-aura-widget="treetoc-widget@kse" style="overflow:auto;height:100px"></div>
-	</div>
-	<div class="col-9">
-     <div data-aura-widget="search3-widget@kse"></div>
-     <div data-aura-widget="results4-widget@kse" style="overflow:auto;height:100px" data-space="200"></div>
-      <div data-aura-widget="selection-widget"></div>     
-     <div data-aura-widget="tabtexts-widget@kse" style="overflow:auto;height:100px"></div>     
-   </div>
-
-
+<div class="mainview" >
+     <div data-aura-widget="tabtexts-widget@kse" data-init-tab="searchtab-widget@kse|search,toctab-widget@kse|toc"></div>
 </div>
 </body>
 </html>

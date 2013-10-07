@@ -1,5 +1,11 @@
 {
 	"db":"vrimul",
 	"linkto":["vriatt","vritik"],
-	"toc":["nikaya","book","sutra[id]"]
+	"pagebreak":"pb.V[n]",
+	"toc":["nikaya","book","readunit[id]"],
+	"searchtab":[
+		{"widget":"jump-widget","name":"Jump"}
+		,{"widget":"simple-search-widget@kse","name":"Simple Search"}
+		,{"widget":"advance-search-widget@kse","name":"Advance Search"}
+	]
 }

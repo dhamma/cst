@@ -1,4 +1,4 @@
 hl {color:red;background:yellow;}
-#dicttofind , .resultitem {font-size:150%;}
-
+#dicttofind , .resultitem , .bodytext {font-size:150%;}
+readunit {font-size:120%;color:brown;}
 div[type="sutta"] {font-size:200%;}
