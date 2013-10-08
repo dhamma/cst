@@ -5,6 +5,7 @@
 	"toc":["nikaya","book","readunit[id]"],
 	"searchtab":[
 		{"widget":"jump-widget","name":"Jump"}
+		,{"widget":"toc-nav-widget","name":"TOC"}
 		,{"widget":"simple-search-widget@kse","name":"Simple Search"}
 		,{"widget":"advance-search-widget@kse","name":"Advance Search"}
 	]
