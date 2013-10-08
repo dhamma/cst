@@ -10,9 +10,8 @@ define(['underscore','backbone','text!./text.tmpl','text!../config.json'],
       if (!parentheight) parentheight=this.$el.parent().parent().height();
       this.$el.css("height", (parentheight) +"px");      
     },
-    render:function() {
-      this.html(_.template(template,{text:""}) );
-      this.resize();
+    settext:function(text) {
+      this.html(_.template(template,{text:text}) );
     },
     gotoline:function(start,end) {
       var that=this;
@@ -26,12 +25,6 @@ define(['underscore','backbone','text!./text.tmpl','text!../config.json'],
           that.html(_.template(template,data2) );
         })
       })
-      /*
-      this.sandbox.yase.getText({db:this.db,start:start, end:end},
-        function(err,data){
-          that.render(data);
-      });
-*/
     },
 
     model:new Backbone.Model(),
@@ -39,8 +32,8 @@ define(['underscore','backbone','text!./text.tmpl','text!../config.json'],
       $(window).resize( _.bind(this.resize,this) );
       this.config=JSON.parse(config);
       this.db=this.config.db;
-      this.render();
-      this.sandbox.on('gotoline',this.gotoline,this);
+
+      this.sandbox.on('settext.'+this.options.viewid,this.settext,this);
     }
   };
 });
