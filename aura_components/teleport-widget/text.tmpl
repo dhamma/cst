@@ -1,12 +1,13 @@
+<div data-aura-widget="opentext-widget@kse"></div>
+<div id="suttainfo"></div>
 
-
-<div class="row" id="sutranumber">
+<div class="row" id="suttanumber">
 <div class="col-3"></div>
 <div class="input-group col-5">
-	<span class="input-group-addon">Sutra Name&nbsp;&nbsp;&nbsp;</span>
+	<span class="input-group-addon">sutta Name</span>
 	
-   <input type="text" class="form-control" list="sutranames" placeholder="sutraname"></input>
-<datalist id="sutranames">
+   <input type="text" class="form-control" list="suttanames" placeholder=""></input>
+<datalist id="suttanames">
 <option value="aa">
 <option value="ab">
 <option value="abc">
@@ -16,12 +17,12 @@
 </div>
 </div>
 
-<div class="row" id="sutraname">
+<div class="row" id="suttaname">
 <div class="col-3"></div>
 <div class="input-group col-5">
-	<span class="input-group-addon">Sutra Number</span>
-	
-   <input type="text" class="form-control" placeholder="sutranumber"></input>
+	 <span class=" input-group-addon">Sutta No.&nbsp;&nbsp;</span>
+   <input type="text" class="form-control" placeholder="e.g, mn6"></input>
+   
 </div>
 </div>
 </div>
@@ -30,33 +31,28 @@
 <div class="row" id="pagenumber">
 <div class="col-3"></div>
 <div class="input-group col-5">
-	<span class="input-group-addon">Page Number</span>
+	<span class="input-group-addon">Book Page</span>
 	<div class="btn-group" data-toggle="buttons">
   <label class="btn btn-primary active">
-    <input type="radio" name="options" id="vri">VRI
+    <input type="radio" name="version" data-versionid="V">VRI
   </label>
   <label class="btn btn-primary">
-    <input type="radio" name="options" id="pts">PTS
+    <input type="radio" name="version" data-versionid="P">PTS
   </label>
   <label class="btn btn-primary">
-    <input type="radio" name="options" id="burmese">Burmese
+    <input type="radio" name="version" data-versionid="M">Burmese
   </label>
   <label class="btn btn-primary">
-    <input type="radio" name="options" id="thai">Thai
+    <input type="radio" name="version" data-versionid="T">Thai
   </label>
-  </div>
-   <input type="text" class="form-control" placeholder="pagenumber"></input>
 
+
+  </div>
+   <a id="pagenumbersample" class="btn btn-success">e.g</a>
+   <input type="text" id="pagenumber" class="form-control" placeholder="e.g, m1.272 or dī. ni. 1.447"></input>
 </div>
 </div>
 
 
 <hr/>
 
-
-<div class="row" id="openbutton">
-<div class="col-4"></div>
-<div class="col-3">
-	<button class="btn btn-primary btn-large">Open Text</button>
-	</div>
-</div>

@@ -2,12 +2,12 @@
 	"db":"vrimul",
 	"linkdb":["vriatt","vritik"],
 	"pagebreak":"pb.V[n]",
-	"linkunit":"readunit[id]",
+	"readunit":"readunit[id]",
 	"defaulttextwidget":"text-widget@kse",
 	"toc":["nikaya","book","readunit[id]"],
 	"searchtab":[
-		{"widget":"toc-nav-widget","name":"TOC"}
-		,{"widget":"teleport-widget","name":"teleport"}
+		{"widget":"teleport-widget","name":"teleport"}
+		,{"widget":"toc-nav-widget","name":"TOC"}
 		,{"widget":"simple-search-widget@kse","name":"Simple Search"}
 		,{"widget":"advance-search-widget@kse","name":"Advance Search"}
 	]

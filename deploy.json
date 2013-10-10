@@ -1,22 +1,23 @@
 {
 	"files":[
-		"tipitaka/aura_components",
-		"tipitaka/css",
-		"tipitaka/index.js",
-		"tipitaka/index.html",
-		"tipitaka/package.json",
-		"tipitaka/config.json",
-		"tipitaka/LICENSE",
-		"tipitaka/README.md",
-		"tipitaka/vrimul.ydb",
-		"tipitaka/vriatt.ydb",
-		"tipitaka/vritik.ydb",
+		"cst/aura_components",
+		"cst/css",
+		"cst/js",
+		"cst/index.js",
+		"cst/index.html",
+		"cst/package.json",
+		"cst/config.json",
+		"cst/LICENSE",
+		"cst/README.md",
+		"cst/vrimul.ydb",
+		"cst/vriatt.ydb",
+		"cst/vritik.ydb",
 		"kse/aura_components"
 	],
 	"darwin" :[
-		"tipitaka/run.command"
+		"cst/run.command"
 	],
 	"win32" :[
-		"tipitaka/run.cmd"
+		"cst/run.cmd"
 	]	
 }
