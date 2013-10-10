@@ -25,20 +25,34 @@ define(function(){
 		if (res.length!=2) return {};
 		return {bkid:res[0], pg:res[1],bkpg:vricstbkpg};
 	}
-
+	var versionname={'pb.V':'VRI','pb.T':'Thai','pb.M':'Burmese','pb.P':'PTS'}
 	var getSuttaInfo=function(opts,callback) {
-		//TODO , find other version
-		callback(opts);
+		var tags=JSON.parse(JSON.stringify(opts.pagebreaks));
+		tags.push('nikaya');
+		tags.push('p[n]');
+		opts.yase.closestTag({db:opts.db,tag:tags,slot:opts.slot+1},
+			function(err,data) {
+				opts.p=data[0].pop();
+				opts.nikaya=data[0].pop().head;
+				opts.pagebreaks=data[0];
+				for (var i in opts.pagebreaks) {
+					opts.pagebreaks[i].humanname=versionname[opts.pagebreaks[i].name];
+				}
+				callback(opts);
+		});
 	}
 	var findReadunit=function(opts,callback) {
 		selectors=["book[id="+opts.bk+']',
-		           "pb."+opts.version+'['+opts.attribute+'='+opts.pb+']' ];
+		           "pb."+opts.version+'['+opts.attribute+'='+opts.pb+']'
+		          ];
 		opts.yase.findTagBySelectors({db:opts.db,selectors:selectors},
 			function(err,data){
 				var slot=data[data.length-1].slot;
 				opts.yase.closestTag({db:opts.db,tag:opts.readunit,slot:slot},
 					function(err,data2){
-						callback(data2[0]);
+						var res=data2[0];
+						res.slot=slot; //use slot of pb
+						callback(res);
 					})
 			})
 	}

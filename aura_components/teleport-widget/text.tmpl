@@ -1,6 +1,3 @@
-<div data-aura-widget="opentext-widget@kse"></div>
-<div id="suttainfo"></div>
-
 <div class="row" id="suttanumber">
 <div class="col-3"></div>
 <div class="input-group col-5">
@@ -20,8 +17,8 @@
 <div class="row" id="suttaname">
 <div class="col-3"></div>
 <div class="input-group col-5">
-	 <span class=" input-group-addon">Sutta No.&nbsp;&nbsp;</span>
-   <input type="text" class="form-control" placeholder="e.g, mn6"></input>
+	 <span class=" input-group-addon">Address.&nbsp;&nbsp;</span>
+   <input type="text" class="form-control" placeholder="e.g, m26.283"></input>
    
 </div>
 </div>
@@ -33,16 +30,16 @@
 <div class="input-group col-5">
 	<span class="input-group-addon">Book Page</span>
 	<div class="btn-group" data-toggle="buttons">
-  <label class="btn btn-primary active">
+  <label class="btn btn-primary active btnversion">
     <input type="radio" name="version" data-versionid="V">VRI
   </label>
-  <label class="btn btn-primary">
+  <label class="btn btn-primary btnversion">
     <input type="radio" name="version" data-versionid="P">PTS
   </label>
-  <label class="btn btn-primary">
+  <label class="btn btn-primary btnversion">
     <input type="radio" name="version" data-versionid="M">Burmese
   </label>
-  <label class="btn btn-primary">
+  <label class="btn btn-primary btnversion">
     <input type="radio" name="version" data-versionid="T">Thai
   </label>
 
@@ -55,4 +52,10 @@
 
 
 <hr/>
-
+<div class="row">
+  <div class="col-3"></div>
+  <div class="col-9">
+<div data-aura-widget="opentext-widget@kse">
+</div>
+</div>
+<div id="suttainfo"></div>

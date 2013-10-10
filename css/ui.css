@@ -2,6 +2,9 @@ hl {color:red;background:yellow;}
 #dicttofind , .resultitem , .bodytext {font-size:120%;}
 readunit {font-size:120%;color:brown;}
 p[n]:hover {background-color:lightyellow;}
+
 div[type="sutta"] {font-size:200%;}
 .linkdb.active {color:yellow;}
+.btnversion.active {color:yellow;}
 # div[data-aura-widget="tabui-widget@kse"] ul#tabs {background-image: url(tabbackground.png)}
+pb:after { content: "["  attr(n) attr(ed) "]"; font-size:75%; color:blue;} ;

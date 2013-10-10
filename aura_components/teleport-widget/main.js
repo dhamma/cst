@@ -6,12 +6,29 @@ define(['underscore','backbone','text!./text.tmpl',
     type: 'Backbone',
     events: {
       "input #pagenumber":"findpagenumber",
-      'click input[name="version"]':"findpagenumber",
-      "click #pagenumbersample":"pagenumbersample"
+      "click .btnversion":"findpagenumber2",
+      "click #pagenumbersample":"pagenumbersample",
+      "click #copydata":"copybuttondata"
+    },
+    copybuttondata:function(e) {
+      $e=$(e.target);
+      var clipboard = require('nw.gui').Clipboard.get();
+      if (!clipboard) {$e.hide();return};
+      oldlabel=$e.html();
+      clipboard.set($e.data('data'),'text');
+      $e.html('Copies!');
+      setTimeout( function() {
+        $e.html(oldlabel)
+      },2000);
+
     },
     pagenumbersample:function() {
-      this.$el.find("input#pagenumber").val("m1.219");
+      this.$el.find("input#pagenumber").val("m1.229");
       this.findpagenumber();
+    },
+    findpagenumber2:function() { //wait for class set active
+      var that=this;
+      setTimeout(function(){that.findpagenumber()},1);
     },
     findpagenumber:function() {
       var val=this.$el.find("input#pagenumber").val();
@@ -23,15 +40,17 @@ define(['underscore','backbone','text!./text.tmpl',
                 bk:bkpg.bkid,pb:bkpg.bkpg,version:version,attribute:attribute};
       cstinfo.findReadunit(opts,function(data){
         data.db=that.db;data.yase=that.sandbox.yase;
-        cstinfo.getSuttaInfo(data,function(err,data2){
-          that.model.set(data2);
+        data.pagebreaks=that.config.pagebreaks;
+        cstinfo.getSuttaInfo(data,function(data2){
+          that.model.set("suttainfo",data2);
         })
       });
     },
     updateinfo:function() {
-      var suttainfo=this.model.get("suttainfo")
-      this.$el.find("suttainfo").html(_.template(infotemplate,suttainfo) );
-
+      var suttainfo=this.model.get("suttainfo");
+      var scrollto='p[n='+suttainfo.p.value.split('.')[1]+']';
+      this.sandbox.emit("dbslotselected",{slot:suttainfo.slot,scrollto:scrollto});
+      this.$el.find("#suttainfo").html(_.template(infotemplate,suttainfo) );
     },
     render:function() {
       this.html(_.template(template,{}) );
