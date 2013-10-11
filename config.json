@@ -4,6 +4,7 @@
 	"pagebreak":"pb.V[n]",
 	"pagebreaks":["pb.V[n]","pb.P[n]","pb.M[n]","pb.T[n]"],
 	"readunit":"readunit[id]",
+	"paragraph":"p[n]",
 	"defaulttextwidget":"text-widget@kse",
 	"toc":["nikaya","book","readunit[id]"],
 	"searchtab":[

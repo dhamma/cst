@@ -27,6 +27,7 @@ define(function(){
 	}
 	var versionname={'pb.V':'VRI','pb.T':'Thai','pb.M':'Burmese','pb.P':'PTS'}
 	var getSuttaInfo=function(opts,callback) {
+		if (!opts.slot) callback({});
 		var tags=JSON.parse(JSON.stringify(opts.pagebreaks));
 		tags.push('nikaya');
 		tags.push('p[n]');
@@ -40,6 +41,21 @@ define(function(){
 				}
 				callback(opts);
 		});
+	}
+	var findAddress=function(opts,callback) {
+		var selectors=[];
+		var v=opts.address.split('.');
+		selectors.push(opts.readunit.substring(0,opts.readunit.length-1)+'='+v[0]);
+		if (v.length==2) {
+			selectors.push(opts.paragraph.substring(0,opts.paragraph.length-1)+'='+opts.address);
+		} else {
+			selectors.push(opts.paragraph);
+		}
+		opts.yase.findTagBySelectors({db:opts.db, selectors:selectors},function(err,data){
+			var r=data[data.length-1];
+			if (!r.head) r.head=data[0].head;
+			callback(r);
+		})
 	}
 	var findReadunit=function(opts,callback) {
 		selectors=["book[id="+opts.bk+']',
@@ -61,6 +77,7 @@ define(function(){
 		parseBookPageNumber:parseBookPageNumber,
 		getSuttaInfo:getSuttaInfo,
 		findReadunit:findReadunit,
+		findAddress:findAddress,
 	};
 	return API;
 });

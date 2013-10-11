@@ -8,7 +8,31 @@ define(['underscore','backbone','text!./text.tmpl',
       "input #pagenumber":"findpagenumber",
       "click .btnversion":"findpagenumber2",
       "click #pagenumbersample":"pagenumbersample",
-      "click #copydata":"copybuttondata"
+      "click #copydata":"copybuttondata",
+      "input #address":"inputaddress"
+    },
+    inputaddress:function(e) {
+      var $e=$(e.target);
+      var that=this;
+      var address=$e.val();
+      if (this.addresstimer) clearTimeout(this.addresstimer);
+      this.addresstimer=setTimeout(function(){that.goaddress(address)},300);
+    },
+    goaddress:function(address) {
+      var that=this;
+      var opts={};
+      opts.db=this.db;opts.yase=that.sandbox.yase;
+      opts.address=address;
+      opts.readunit=this.config.readunit;
+      opts.paragraph=this.config.paragraph;
+      cstinfo.findAddress( opts, function(data) {
+          data.db=opts.db;
+          data.yase=opts.yase;
+          data.pagebreaks=that.config.pagebreaks;
+          cstinfo.getSuttaInfo(data,function(data2){
+              that.model.set("suttainfo",data2);
+          })
+      })
     },
     copybuttondata:function(e) {
       $e=$(e.target);
@@ -32,6 +56,7 @@ define(['underscore','backbone','text!./text.tmpl',
     },
     findpagenumber:function() {
       var val=this.$el.find("input#pagenumber").val();
+      if (!val)return;
       var version=this.$el.find('label.active input[name="version"]').data('versionid');
       var bkpg=cstinfo.parseBookPageNumber(val, version);
       var attribute=this.config.pagebreak.match(/\[(.*?)\]/)[1] || 'n';
@@ -48,7 +73,12 @@ define(['underscore','backbone','text!./text.tmpl',
     },
     updateinfo:function() {
       var suttainfo=this.model.get("suttainfo");
-      var scrollto='p[n='+suttainfo.p.value.split('.')[1]+']';
+      if (!suttainfo.slot) {
+        this.$el.find("#suttainfo").html("not found");
+      }
+      var scrollto="";
+      if (suttainfo.p && suttainfo.p.value)
+        scrollto='p[n='+suttainfo.p.value.split('.')[1]+']';
       this.sandbox.emit("dbslotselected",{slot:suttainfo.slot,scrollto:scrollto});
       this.$el.find("#suttainfo").html(_.template(infotemplate,suttainfo) );
     },
