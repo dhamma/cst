@@ -58,11 +58,11 @@ define(['underscore','backbone','text!./text.tmpl',
       var val=this.$el.find("input#pagenumber").val();
       if (!val)return;
       var version=this.$el.find('label.active input[name="version"]').data('versionid');
-      var bkpg=cstinfo.parseBookPageNumber(val, version);
+      var bkp=cstinfo.parseBookParagraph(val, version);
       var attribute=this.config.pagebreak.match(/\[(.*?)\]/)[1] || 'n';
       var that=this;
       var opts={db:this.db,readunit:this.config.readunit,yase:this.sandbox.yase,
-                bk:bkpg.bkid,pb:bkpg.bkpg,version:version,attribute:attribute};
+                bk:bkp.bk,pb:bkp.bkp,version:version,attribute:attribute};
       cstinfo.findReadunit(opts,function(data){
         data.db=that.db;data.yase=that.sandbox.yase;
         data.pagebreaks=that.config.pagebreaks;
