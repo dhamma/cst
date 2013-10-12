@@ -11,7 +11,7 @@
 	"defaulttextwidget":"text-widget@kse",
 	"toc":["nikaya","book","readunit[id]"],
 	"searchtab":[
-		{"widget":"teleport-widget","name":"teleport"}
+		{"widget":"leap-widget","name":"Leap"}
 		,{"widget":"toc-nav-widget","name":"TOC"}
 		,{"widget":"simple-search-widget@kse","name":"Simple Search"}
 		,{"widget":"advance-search-widget@kse","name":"Advance Search"}
