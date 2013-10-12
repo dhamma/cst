@@ -42,14 +42,14 @@ define(function(){
 				callback(opts);
 		});
 	}
-	var findAddress=function(opts,callback) {
+	var findid=function(opts,callback) {
 		var selectors=[];
-		var v=opts.address.split('.');
+		var v=opts.id.split('.');
 		selectors.push(opts.readunit.substring(0,opts.readunit.length-1)+'='+v[0]);
 		if (v.length==2) {
-			selectors.push(opts.paragraph.substring(0,opts.paragraph.length-1)+'='+opts.address);
+			selectors.push(opts.idtype.substring(0,opts.idtype.length-1)+'='+opts.id);
 		} else {
-			selectors.push(opts.paragraph);
+			selectors.push(opts.idtype);
 		}
 		opts.yase.findTagBySelectors({db:opts.db, selectors:selectors},function(err,data){
 			var r=data[data.length-1];
@@ -57,6 +57,7 @@ define(function(){
 			callback(r);
 		})
 	}
+
 	var findReadunit=function(opts,callback) {
 		selectors=["book[id="+opts.bk+']',
 		           "pb."+opts.version+'['+opts.attribute+'='+opts.pb+']'
@@ -73,7 +74,7 @@ define(function(){
 			})
 	}
 
-	var bp2address=[
+	var bp2g=[
 		["dn1",1,"d1"],	["dn1",150,"d2"],["dn1",254,"d3"],["dn1",300,"d4"],
 		["dn1",323,"d5"],["dn1",359,"d6"],["dn1",378,"d7"],["dn1",381,"d8"],
 		["dn1",406,"d9"],["dn1",444,"d10"],["dn1",481,"d11"],["dn1",501,"d12"],["dn1",518,"d13"],
@@ -127,15 +128,15 @@ define(function(){
 		["an7",1,"a7"],	["an8",1,"a8"],	["an9",1,"a9"],	["an10",1,"a10"],	["an11",1,"a11"]
 	]
 
-	var bookpara2address=function(bp) {
+	var bookpn2group=function(bp) {
 		var pgroup="";
-		for (var i=0;i<bp2address.length;i++ ) {
-			if (bp2address[i][0]!=bp.bk) {
+		for (var i=0;i<bp2pn.length;i++ ) {
+			if (bp2g[i][0]!=bp.bk) {
 				if (pgroup) break;
 				else continue;
 			}
-			if (bp.p>=bp2address[i][1]) {
-				pgroup=bp2address[i][2];
+			if (bp.p>=bp2g[i][1]) {
+				pgroup=bp2g[i][2];
 			}
 		}
 		return pgroup;
@@ -154,9 +155,9 @@ define(function(){
 			while (match=pattern[i].exec(input)) {
 				//console.log(match[1])
 				var bp=parseBookParagraph(match[1]);
-				var address=bookpara2address(bp);
+				var group=bookpn2group(bp);
 				//console.log(address,bp)
-				out.push({address:address+'.'+bp.p, p:bp.p, group:address})
+				out.push({gpn:group+'.'+bp.p, p:bp.p, group:group})
 			}
 		}
 		return {out:out};
@@ -166,7 +167,7 @@ define(function(){
 		parseBookParagraph:parseBookParagraph,
 		getSuttaInfo:getSuttaInfo,
 		findReadunit:findReadunit,
-		findAddress:findAddress,
+		findid:findid,
 		scanlink:scanlink,
 	};
 	return API;

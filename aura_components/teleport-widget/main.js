@@ -9,23 +9,24 @@ define(['underscore','backbone','text!./text.tmpl',
       "click .btnversion":"findpagenumber2",
       "click #pagenumbersample":"pagenumbersample",
       "click #copydata":"copybuttondata",
-      "input #address":"inputaddress"
+      "input .findid":"inputid"
     },
-    inputaddress:function(e) {
+    inputid:function(e) {
       var $e=$(e.target);
       var that=this;
-      var address=$e.val();
-      if (this.addresstimer) clearTimeout(this.addresstimer);
-      this.addresstimer=setTimeout(function(){that.goaddress(address)},300);
+      var val=$e.val();
+      var type=$e.data("type");
+      if (this.timer) clearTimeout(this.timer);
+      this.timer=setTimeout(function(){that.goid(type,val)},300);
     },
-    goaddress:function(address) {
+    goid:function(type,id) {
       var that=this;
       var opts={};
       opts.db=this.db;opts.yase=that.sandbox.yase;
-      opts.address=address;
+      opts.id=id;
       opts.readunit=this.config.readunit;
-      opts.paragraph=this.config.paragraph;
-      cstinfo.findAddress( opts, function(data) {
+      opts.idtype=this.config.idtype[type];
+      cstinfo.findid( opts, function(data) {
           data.db=opts.db;
           data.yase=opts.yase;
           data.pagebreaks=that.config.pagebreaks;
