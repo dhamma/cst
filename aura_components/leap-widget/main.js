@@ -1,7 +1,7 @@
 define(['underscore','backbone','text!./text.tmpl',
   'text!./info.tmpl','text!../config.json',
-  '../js/cstinfo','../tools/tipitakacustom'], 
-  function(_,Backbone,template,infotemplate,config,cstinfo,customfunc) {
+  '../js/cstinfo','../js/readunit.js','../js/tipitakacustom',], 
+  function(_,Backbone,template,infotemplate,config,cstinfo,suttanames,custom) {
   return {
     type: 'Backbone',
     events: {
@@ -10,44 +10,26 @@ define(['underscore','backbone','text!./text.tmpl',
       "click #pagenumbersample":"pagenumbersample",
       "click #copydata":"copybuttondata",
       "input .findid":"inputid",
-      "input #suttaname":"inputsuttaname",
-      "input #suttanames":"picksuttaname"
-    },
-    picksuttaname:function(e) {
-      console.log($(e.target));
+      "input #suttaname":"inputsuttaname"
     },
     inputsuttaname:function(e) {
-      var $e=$(e.target);
-      var that=this;
-      var val=$e.val();
-      if (this.sutratimer) clearTimeout(this.timer);
-      this.sutratimer=setTimeout(function(){that.findsutra(val)},200);
-    },    
-    findsutra:function(val) {
-      var opts={db:this.db,token:val};
-      //var opts={};
-      //opts.db=this.db;
-      //opts.token=val;
-      if (!val) return;
-      this.sandbox.yase.expandToken(opts,function(err,data){
-        var candidates=[];
-        for (var i in data) {
-          candidates.push('<option value="'+customfunc.simplifiedToken(data[i])+'">'+
-            data[i]+'</option>')
-        }
-        $("#suttanames").html(candidates.join(""));
-      })
+      var name=this.$el.find("#suttaname").val();
+      sname=custom.simplifiedToken(name);
+      if (sname!=name) this.$el.find("#suttaname").val(sname);
+      this.goid(suttanames[sname]);
     },
+
     inputid:function(e) {
       var $e=$(e.target);
       var that=this;
       var val=$e.val();
       var type=$e.data("type");
       if (this.timer) clearTimeout(this.timer);
-      this.timer=setTimeout(function(){that.goid(type,val)},300);
+      this.timer=setTimeout(function(){that.goid(val,type)},300);
     },
-    goid:function(type,id) {
+    goid:function(id,type) {
       var that=this;
+      type=type||"pid";
       var opts={};
       opts.db=this.db;opts.yase=that.sandbox.yase;
       opts.id=id;
@@ -111,8 +93,18 @@ define(['underscore','backbone','text!./text.tmpl',
       this.sandbox.emit("dbslotselected",{slot:suttainfo.slot,scrollto:scrollto});
       this.$el.find("#suttainfo").html(_.template(infotemplate,suttainfo) );
     },
+    renderdatalist:function() {
+      var candidates=[];
+      for (var i in suttanames) {
+          candidates.push('<option value="'+i+'">'+
+            suttanames[i]+'</option>')
+        }
+      this.$el.find("#suttanames").html(candidates.join(""));
+
+    },
     render:function() {
       this.html(_.template(template,{}) );
+      this.renderdatalist();
     },
 
     model:new Backbone.Model(),

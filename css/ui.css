@@ -7,4 +7,10 @@ div[type="sutta"] {font-size:200%;}
 .linkdb.active {color:yellow;}
 .btnversion.active {color:yellow;}
 # div[data-aura-widget="tabui-widget@kse"] ul#tabs {background-image: url(tabbackground.png)}
-pb:after { content: "["  attr(n) attr(ed) "]"; font-size:75%; color:blue;} ;
+pb:after { content: "["  attr(n) attr(ed) "]"; font-size:75%; color:blue;} 
+.hit {
+	float:right;color:DarkOrange;font-weight:bold;font-family: Courier
+}
+
+.label-large {font-size:200%;}
+.label-medium {font-size:150%;}

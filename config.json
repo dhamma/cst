@@ -1,5 +1,6 @@
 {
 	"db":"vrimul",
+	"website":"http://dhamma.github.io",
 	"linkdb":["vriatt","vritik"],
 	"pagebreak":"pb.V[n]",
 	"pagebreaks":["pb.V[n]","pb.P[n]","pb.M[n]","pb.T[n]"],
@@ -11,9 +12,11 @@
 	"defaulttextwidget":"text-widget@kse",
 	"toc":["nikaya","book","readunit[id]"],
 	"searchtab":[
-		{"widget":"leap-widget","name":"Leap"}
+		{"widget":"simple-search-widget","name":"Simple Search"}
+	
+		,{"widget":"leap-widget","name":"Leap"}
 		,{"widget":"toc-nav-widget","name":"TOC"}
-		,{"widget":"simple-search-widget@kse","name":"Simple Search"}
-		,{"widget":"advance-search-widget@kse","name":"Advance Search"}
+		,{"widget":"about-widget","name":"About"}
+		
 	]
 }
