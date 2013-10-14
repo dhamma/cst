@@ -45,6 +45,7 @@ define(function(){
 	var findid=function(opts,callback) {
 		var selectors=[];
 		var v=opts.id.split('.');
+		
 		selectors.push(opts.readunit.substring(0,opts.readunit.length-1)+'='+v[0]);
 		if (v.length==2) {
 			selectors.push(opts.idtype.substring(0,opts.idtype.length-1)+'='+opts.id);

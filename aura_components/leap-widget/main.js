@@ -26,6 +26,7 @@ define(['underscore','backbone','text!./text.tmpl',
       opts.id=id;
       opts.readunit=this.config.readunit;
       opts.idtype=this.config.idtype[type];
+      if (id[0]=='a' && type=='sid') opts.idtype=this.config.idtype['pid'];;
       cstinfo.findid( opts, function(data) {
           data.db=opts.db;
           data.yase=opts.yase;
