@@ -1,7 +1,7 @@
 define(['underscore','backbone','text!./text.tmpl',
   'text!./info.tmpl','text!../config.json',
-  '../js/cstinfo'], 
-  function(_,Backbone,template,infotemplate,config,cstinfo) {
+  '../js/cstinfo','../tools/tipitakacustom'], 
+  function(_,Backbone,template,infotemplate,config,cstinfo,customfunc) {
   return {
     type: 'Backbone',
     events: {
@@ -9,7 +9,34 @@ define(['underscore','backbone','text!./text.tmpl',
       "click .btnversion":"findpagenumber2",
       "click #pagenumbersample":"pagenumbersample",
       "click #copydata":"copybuttondata",
-      "input .findid":"inputid"
+      "input .findid":"inputid",
+      "input #suttaname":"inputsuttaname",
+      "input #suttanames":"picksuttaname"
+    },
+    picksuttaname:function(e) {
+      console.log($(e.target));
+    },
+    inputsuttaname:function(e) {
+      var $e=$(e.target);
+      var that=this;
+      var val=$e.val();
+      if (this.sutratimer) clearTimeout(this.timer);
+      this.sutratimer=setTimeout(function(){that.findsutra(val)},200);
+    },    
+    findsutra:function(val) {
+      var opts={db:this.db,token:val};
+      //var opts={};
+      //opts.db=this.db;
+      //opts.token=val;
+      if (!val) return;
+      this.sandbox.yase.expandToken(opts,function(err,data){
+        var candidates=[];
+        for (var i in data) {
+          candidates.push('<option value="'+customfunc.simplifiedToken(data[i])+'">'+
+            data[i]+'</option>')
+        }
+        $("#suttanames").html(candidates.join(""));
+      })
     },
     inputid:function(e) {
       var $e=$(e.target);
