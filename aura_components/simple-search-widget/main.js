@@ -6,8 +6,23 @@ define(['underscore','text!./template.tmpl',
     events: {
     	"input #tofind":"dosearch",
       "click .diacritictoken":"diacritictokenclick",
-      "click #tofindcandidates":"diacritictokenclick"
+      "click #tofindcandidates":"diacritictokenclick",
+      "keyup #tofind":"checkenter",
+      "click #opensearchtab":"opensearchtab",
+      "click #cleartofind":"cleartofind"
     },
+    cleartofind:function() {
+      this.$el.find("#tofind").val("").focus();
+    },
+    opensearchtab:function() {
+      console.log('open search tab')
+    },
+    checkenter:function(e) {
+      if (e.keyCode!=13) return;
+
+      if (this.hitcount) this.opensearchtab();
+    },
+
     diacritictokenclick:function(e) {
       $e=$(e.target)
       this.$el.find("#tofind").val($e.html());
@@ -33,6 +48,7 @@ define(['underscore','text!./template.tmpl',
         $panel=that.$el.find("#matchpanel");
         $opensearchtab=that.$el.find("#opensearchtab");
         $div.html(data);
+        that.hitcount=data;
         if (data) {
           $panel.removeClass('panel-danger');
           $div.addClass('label-success');

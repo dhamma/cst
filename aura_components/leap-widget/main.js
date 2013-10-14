@@ -10,7 +10,11 @@ define(['underscore','backbone','text!./text.tmpl',
       "click #pagenumbersample":"pagenumbersample",
       "click #copydata":"copybuttondata",
       "input .findid":"inputid",
-      "input #suttaname":"inputsuttaname"
+      "input #suttaname":"inputsuttaname",
+      "click #clearsuttaname":"clearsuttaname"
+    },
+    clearsuttaname:function() {
+      this.$el.find("#suttaname").val("").focus();
     },
     inputsuttaname:function(e) {
       var name=this.$el.find("#suttaname").val();
