@@ -1,3 +1,6 @@
 <%for (var i=0;i<candidate.length;i++) {%>
-<a class="btn btn-link"><%=candidate[i]%></a>
+<span class="inputcandidate label label-info"><%=candidate[i]%></span><%=count[i]%>  
+<%}%>
+<%if (candidate.length){%>
+<a id="prefixwith" class="btn btn-primary">Include All</a>
 <%}%>
