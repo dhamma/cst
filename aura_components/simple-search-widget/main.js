@@ -111,7 +111,7 @@ define(['underscore','backbone','text!./template.tmpl',
         if (!val) return;
         if (data.raw.length!=1)
           that.$el.find("#tofindcandidates").html(
-            _.template(candidatetemplate,{candidate:data.raw,count:data.count}));
+            _.template(candidatetemplate,{candidate:data.raw,count:data.count,more:data.more}));
         
       })
 
