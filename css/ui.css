@@ -15,3 +15,4 @@ pb:after { content: "["  attr(n) attr(ed) "]"; font-size:75%; color:blue;}
 .label-large {font-size:200%;}
 .label-medium {font-size:150%;}
 .inputcandidate {cursor:pointer;line-height:175%;font-size:120%;}
+.resultitem:hover {background:lightyellow;}

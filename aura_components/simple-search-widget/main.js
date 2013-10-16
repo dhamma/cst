@@ -36,13 +36,17 @@ define(['underscore','backbone','text!./template.tmpl',
       this.dosearch();
     },
     opensearchtab:function() {
-      var tofind=this.$el.find("#tofind").val();
+      var tofind=this.$el.find("#tofind").val().trim();
       localStorage.setItem("tofind.cst",tofind);
       var opts={};
       opts.tabsid='maintabs';
       opts.widget='simple-result-widget';
       opts.focus=true;
-      opts.extra={db:this.db,tofind:tofind,pagebreak:this.config.pagebreak};
+      
+      //pass to init of sub-widget
+      opts.extra={db:this.db,tofind:tofind,
+                  pagebreak:this.config.pagebreak,
+                  toc:this.config.toc,hidenohit:true};
       opts.name=tofind;
       this.sandbox.emit("newtab",opts);
     },
@@ -75,7 +79,7 @@ define(['underscore','backbone','text!./template.tmpl',
         if (this.timer) clearTimeout(this.timer);
         this.$el.find("#opensearchtab").addClass('disabled');
         var that=this;
-        var tofind=that.$("#tofind").val();
+        var tofind=that.$("#tofind").val().trim();
         that.expandtoken(tofind);
         this.timer=setTimeout(function(){
           that.expandtoken(that.getends(tofind));

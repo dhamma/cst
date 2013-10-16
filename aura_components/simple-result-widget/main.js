@@ -9,8 +9,6 @@ define(['underscore','backbone','text!./text.tmpl','text!../config.json'],
     resize:function() {
       $el=this.$el;
       var height=$el.parent().height();
-      //check if inside a tab
-      //if (height=$el.height()) height=$el.parent().parent().height();
       while (height<20) {
         $el=$el.parent();
         if (!$el) break;
@@ -27,7 +25,8 @@ define(['underscore','backbone','text!./text.tmpl','text!../config.json'],
       this.html( _.template(template,{viewid:viewid,groupid:this.groupid}));
       setTimeout(function(){
         that.sandbox.emit("init."+viewid,opts);
-      },100);
+        that.sandbox.emit("buildtoc."+that.groupid,opts);
+      },200);
       this.resize();
     },
     initialize: function() {
