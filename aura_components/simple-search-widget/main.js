@@ -36,7 +36,15 @@ define(['underscore','backbone','text!./template.tmpl',
       this.dosearch();
     },
     opensearchtab:function() {
-      console.log('open search tab')
+      var tofind=this.$el.find("#tofind").val();
+      localStorage.setItem("tofind.cst",tofind);
+      var opts={};
+      opts.tabsid='maintabs';
+      opts.widget='simple-result-widget';
+      opts.focus=true;
+      opts.extra={db:this.db,tofind:tofind,pagebreak:this.config.pagebreak};
+      opts.name=tofind;
+      this.sandbox.emit("newtab",opts);
     },
     checkenter:function(e) {
       if (e.keyCode!=13) return;
@@ -135,7 +143,7 @@ define(['underscore','backbone','text!./template.tmpl',
       this.config=JSON.parse(config);
       this.db=this.config.db;
       setTimeout(function(){
-        that.$("#tofind").val(localStorage.getItem("tofind"));
+        that.$("#tofind").val(localStorage.getItem("tofind.cst"));
         that.dosearch();
       },100)
     }
