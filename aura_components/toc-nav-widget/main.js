@@ -9,7 +9,7 @@ define(['underscore','backbone','text!./template.tmpl','text!../config.json'],
       this.html(_.template(template,{}) );
       var that=this;
       setTimeout(function(){//to display toc
-        that.sandbox.emit("buildtoc",{db:that.config.db,toc:that.config.toc});  
+        that.sandbox.emit("init",{db:that.config.db,toc:that.config.toc});  
       },200)
       
     },

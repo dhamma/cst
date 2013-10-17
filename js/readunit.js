@@ -1,6 +1,6 @@
 define(function(){return{
- "brahmajalasuttam": "d1",
- "samannaphalasuttam": "d2",
+ "brahmajalasuttam梵網經": "d1",
+ "samannaphalasuttam沙門果經": "d2",
  "ambatthasuttam": "d3",
  "sonadandasuttam": "d4",
  "kutadantasuttam": "d5",

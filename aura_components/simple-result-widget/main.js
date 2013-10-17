@@ -21,11 +21,9 @@ define(['underscore','backbone','text!./text.tmpl','text!../config.json'],
     init:function(opts) {
       var that=this;
       this.groupid='G'+Math.round((Math.random()*1000000));
-      var viewid='V'+Math.round((Math.random()*1000000));
-      this.html( _.template(template,{viewid:viewid,groupid:this.groupid}));
+      this.html( _.template(template,{groupid:this.groupid}));
       setTimeout(function(){
-        that.sandbox.emit("init."+viewid,opts);
-        that.sandbox.emit("buildtoc."+that.groupid,opts);
+        that.sandbox.emit("init."+that.groupid,opts);
       },200);
       this.resize();
     },
