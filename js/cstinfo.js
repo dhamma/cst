@@ -59,6 +59,14 @@ define(function(){
 		})
 	}
 
+	var slot2paragraph=function(opts,callback) {
+		var tags=[opts.paragraphunit];
+		opts.yase.closestTag({db:opts.db,tag:tags,slot:opts.slot},
+		function(err,data2){
+			callback(data2[0]);
+		});
+	}
+
 	var findReadunit=function(opts,callback) {
 		selectors=["book[id="+opts.bk+']',
 		           "pb."+opts.version+'['+opts.attribute+'='+opts.pb+']'
@@ -169,6 +177,7 @@ define(function(){
 		getSuttaInfo:getSuttaInfo,
 		findReadunit:findReadunit,
 		findid:findid,
+		slot2paragraph:slot2paragraph,
 		scanlink:scanlink,
 	};
 	return API;
