@@ -20,6 +20,7 @@ define(['underscore','backbone','text!./template.tmpl',
       "click #cleartofind":"cleartofind",
       "click #prefixwith":"prefixwith"
     },
+   
     removeop:function(val) {
       if (val[val.length-1]=='*') val=val.substring(0,val.length-1);
       return val;
@@ -146,6 +147,7 @@ define(['underscore','backbone','text!./template.tmpl',
       this.model=new Backbone.Model();
       this.config=JSON.parse(config);
       this.db=this.config.db;
+
       setTimeout(function(){
         that.$("#tofind").val(localStorage.getItem("tofind.cst"));
         that.dosearch();
