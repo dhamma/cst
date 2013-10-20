@@ -16,9 +16,8 @@
 	"toc":["nikaya","book","readunit[id]"],
 	"searchtab":[
 		{"widget":"simple-search-widget","name":"Simple Search"}
-	
+		,{"widget":"toc-nav-widget","name":"Table of Content"}
 		,{"widget":"leap-widget","name":"Leap"}
-		,{"widget":"toc-nav-widget","name":"TOC"}
 		,{"widget":"about-widget","name":"About"}
 		
 	]

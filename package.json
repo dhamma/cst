@@ -1,6 +1,6 @@
 {
-  "name": "kse_jiangkangyur",
-  "description": "Search Engine Demo for Tipitaka",
+  "name": "cst",
+  "description": "Search Engine for Tipitaka",
   "version": "0.2",
   "main": "index.html",
   "single-instance":true,
