@@ -27,12 +27,13 @@ define(['underscore','backbone','../js/cstinfo'
       })  
     },     
     render:function() {
-      this.html(_.template(template,{}) );
+      var groupid='tnav'+Math.round(Math.random()*10000);
+      this.html(_.template(template,{groupid:groupid}) );
       var that=this;
-      setTimeout(function(){//to display toc
-        that.sandbox.emit("init",{db:that.config.db,toc:that.config.toc});  
-      },200)
-      
+      this.sandbox.once('initialized.'+groupid,function(id){
+        that.sandbox.emit("init."+groupid,id,
+          {db:that.config.db,toc:that.config.toc}); 
+      })      
     },
     model:new Backbone.Model(),
     initialize: function() {
