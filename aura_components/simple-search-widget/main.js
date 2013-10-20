@@ -1,6 +1,6 @@
 /*
 TODO
-  evam me !sutam
+  evam me sutam!
   search "evam me"  A
   search "evam me sutam" B
   return A exclude B
@@ -90,6 +90,11 @@ define(['underscore','backbone','text!./template.tmpl',
         this.$el.find("#openresult").addClass('disabled');
         var that=this;
         var tofind=that.$("#tofind").val().trim();
+        if (!tofind) {
+          this.$el.find("#searchhelp").show();
+        } else {
+          this.$el.find("#searchhelp").hide();
+        }
         that.expandtoken(tofind);
         this.timer=setTimeout(function(){
           that.expandtoken(that.getends(tofind));
@@ -100,15 +105,18 @@ define(['underscore','backbone','text!./template.tmpl',
        $div=this.$el.find("#matchcount_"+db);
         $openresult=this.$el.find("#openresult");
         $div.html(count);
-        if (db==this.db) this.hitcount=count;
+        
+        if (db==this.db) {
+          this.hitcount=count;
+          if (count) $openresult.removeClass('disabled');
+          else $openresult.addClass('disabled');
+        }
         if (count) {
           $div.addClass('label-success');
           $div.removeClass('label-danger');
-          $openresult.removeClass('disabled');
         } else {
           $div.addClass('label-danger');
           $div.removeClass('label-success');
-          $openresult.addClass('disabled');
         }      
     },
     gethitcount:function(tofind) {
