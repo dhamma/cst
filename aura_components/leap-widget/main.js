@@ -14,8 +14,14 @@ define(['underscore','backbone','text!./text.tmpl',
       "click #pagenumbersample":"pagenumbersample",
       "click #copydata":"copybuttondata",
       "input .findid":"inputid",
+      "click input[name='version']":"changeversion",
       "input #suttaname":"inputsuttaname",
       "click #clearsuttaname":"clearsuttaname"
+    },
+    changeversion:function(e) {
+      var ver=$(e.target).data('versionid');
+      this.model.set("version",ver);
+      console.log(ver);
     },
     clearsuttaname:function() {
       this.$el.find("#suttaname").val("").focus();
@@ -24,7 +30,8 @@ define(['underscore','backbone','text!./text.tmpl',
       var name=this.$el.find("#suttaname").val();
       sname=custom.simplifiedToken(name);
       if (sname!=name) this.$el.find("#suttaname").val(sname);
-      this.goid(suttanames[sname]);
+      var sid=suttanames[sname];
+      if (sid) this.goid(sid);
     },
 
     inputid:function(e) {
@@ -35,15 +42,23 @@ define(['underscore','backbone','text!./text.tmpl',
       if (this.timer) clearTimeout(this.timer);
       this.timer=setTimeout(function(){that.goid(val,type)},300);
     },
+
     goid:function(id,type) {
       var that=this;
       type=type||"pid";
       var opts={};
       opts.db=this.db;opts.yase=that.sandbox.yase;
       opts.id=id;
-      opts.readunit=this.config.readunit;
+      
+      if (type=="bpid") {
+        opts.bookunit=this.config.bookunit;
+      } else {
+        opts.readunit=this.config.readunit;
+      }
+
       opts.idtype=this.config.idtype[type];
-      if (id[0]=='a' && type=='sid') opts.idtype=this.config.idtype['pid'];;
+      if (id[0]=='a' && type=='sid') opts.idtype=this.config.idtype['pid'];
+
       cstinfo.findid( opts, function(data) {
           data.db=opts.db;
           data.yase=opts.yase;
@@ -66,7 +81,7 @@ define(['underscore','backbone','text!./text.tmpl',
 
     },
     pagenumbersample:function() {
-      this.$el.find("input#pagenumber").val("m1.229");
+      this.$el.find("input#pagenumber").val("mn1.229");
       this.findpagenumber();
     },
     findpagenumber2:function() { //wait for class set active
@@ -76,7 +91,7 @@ define(['underscore','backbone','text!./text.tmpl',
     findpagenumber:function() {
       var val=this.$el.find("input#pagenumber").val();
       if (!val)return;
-      var version=this.$el.find('label.active input[name="version"]').data('versionid');
+      var version=this.model.get("version");
       var bkp=cstinfo.parseBookParagraph(val, version);
       var attribute=this.config.pagebreak.match(/\[(.*?)\]/)[1] || 'n';
       var that=this;
@@ -120,6 +135,7 @@ define(['underscore','backbone','text!./text.tmpl',
       this.config=JSON.parse(config);
       this.db=this.config.db;
       this.model.on("change:suttainfo",this.updateinfo,this);
+      this.model.set("version","V"); //default VRI page number
       this.render();
     }
   };

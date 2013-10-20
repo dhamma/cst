@@ -30,25 +30,35 @@ define(function(){
 		if (!opts.slot) callback({});
 		var tags=JSON.parse(JSON.stringify(opts.pagebreaks));
 		tags.push('nikaya');
+		tags.push('readunit[id]');
 		tags.push('p[n]');
 		opts.yase.closestTag({db:opts.db,tag:tags,slot:opts.slot+1},
 			function(err,data) {
-				opts.p=data[0].pop();
-				opts.nikaya=data[0].pop().head;
-				opts.pagebreaks=data[0];
+				var r=data[0]
+				opts.p=r.pop();
+				opts.readunit=r.pop();
+				opts.nikaya=r.pop().head;
+				opts.head=opts.readunit.head;
+				opts.pagebreaks=r;
 				for (var i in opts.pagebreaks) {
 					opts.pagebreaks[i].humanname=versionname[opts.pagebreaks[i].name];
 				}
 				callback(opts);
 		});
 	}
+
 	var findid=function(opts,callback) {
 		var selectors=[];
 		var v=opts.id.split('.');
 		
-		selectors.push(opts.readunit.substring(0,opts.readunit.length-1)+'='+v[0]);
+		if (opts.bookunit) {
+			selectors.push(opts.bookunit.substring(0,opts.bookunit.length-1)+'='+v[0]);	
+		} else {
+			selectors.push(opts.readunit.substring(0,opts.readunit.length-1)+'='+v[0]);	
+		}		
+
 		if (v.length==2) {
-			selectors.push(opts.idtype.substring(0,opts.idtype.length-1)+'='+opts.id);
+			selectors.push(opts.idtype.substring(0,opts.idtype.length-1)+'='+v[1]);
 		} else {
 			selectors.push(opts.idtype);
 		}

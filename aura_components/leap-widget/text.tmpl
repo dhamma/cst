@@ -1,22 +1,58 @@
+
+
+
+<div class="row" id="pagenumber">
+<div class="col-2"></div>
+<div class="input-group col-8">
+
+  <span class="input-group-addon">Book Page</span>
+
+   
+   <input type="text" id="pagenumber" class="form-control" placeholder="e.g, mn1.219 or dī. ni. 1.447"></input>
+
+  <label class="btn btn-small btn-info active btnversion input-group-addon">
+    <input type="radio" name="version" checked=true data-versionid="V">VRI
+  </label>
+  <label class="btn btn-small btn-info active btnversion input-group-addon">
+    <input type="radio" name="version" data-versionid="P">PTS
+  </label>
+  <label class="btn btn-small btn-info active btnversion input-group-addon">
+    <input type="radio" name="version" data-versionid="M">Burmese
+  </label>
+  <label class="btn btn-small btn-info active btnversion input-group-addon">
+    <input type="radio" name="version" data-versionid="T">Thai
+  </label>
+  <a id="pagenumbersample" class="btn active btn-success input-group-addon">e.g</a>
+     
+</div>
+</div>
+
 <div class="row">
 <div class="col-2"></div>
 <div class="input-group col-8">
-	<span class="input-group-addon">Sutta/Vaggo Name</span>
-	
-   <input id="suttaname" type="text" class="form-control" list="suttanames" placeholder=""></input>
+   <span class="input-group-addon">Book+Paragraph</span>
+   <input data-type="bpid" type="text" class="findid form-control" placeholder="e.g, mn1.283"></input>
+   
+</div>
+</div>
+
+<div class="row">
+<div class="col-2"></div>
+<div class="input-group col-8">
+  <span class="input-group-addon">Sutta/Vaggo Name</span>
+  
+   <input id="suttaname" type="text" class="form-control" list="suttanames" placeholder="type prefix of sutta name"></input>
    <span id="clearsuttaname" title="clear Sutta name" class="input-group-addon btn btn-danger">×</span>
 <datalist id="suttanames">
 </datalist>   
 
 </div>
 </div>
-</div>
-</div>
 
 <div class="row" >
 <div class="col-2"></div>
 <div class="input-group col-8">
-	 <span class="input-group-addon">Paragraph ID</span>
+	 <span class="input-group-addon">Sutta+Paragraph</span>
    <input data-type="pid" type="text" class="findid form-control" placeholder="e.g, m26.283"></input>
    
 </div>
@@ -25,40 +61,14 @@
 <div class="row">
 <div class="col-2"></div>
 <div class="input-group col-8">
-   <span class="input-group-addon">Sutta/Vaggo ID</span>
+   <span class="input-group-addon">Sutta+Sub Number</span>
    <input data-type="sid" type="text" class="findid form-control" placeholder="e.g, s12.82"></input>
    
 </div>
 </div>
 
 
-<div class="row" id="pagenumber">
-<div class="col-2"></div>
-<div class="input-group col-8">
-	<span class="input-group-addon">Book Page</span>
-	<div class="btn-group" data-toggle="buttons">
-  <label class="btn btn-primary active btnversion">
-    <input type="radio" name="version" data-versionid="V">VRI
-  </label>
-  <label class="btn btn-primary btnversion">
-    <input type="radio" name="version" data-versionid="P">PTS
-  </label>
-  <label class="btn btn-primary btnversion">
-    <input type="radio" name="version" data-versionid="M">Burmese
-  </label>
-  <label class="btn btn-primary btnversion">
-    <input type="radio" name="version" data-versionid="T">Thai
-  </label>
 
-
-  </div>
-   <a id="pagenumbersample" class="btn btn-success">e.g</a>
-   <input type="text" id="pagenumber" class="form-control" placeholder="e.g, mn1.219 or dī. ni. 1.447"></input>
-</div>
-</div>
-
-
-<hr/>
 <div class="row">
   <div class="col-3"></div>
   <div class="col-9">
