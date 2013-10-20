@@ -1,11 +1,16 @@
+
 <div class="row">
 	<div class="col-3"></div>
 	<div class="col-6">
-<div id="matchpanel" class="panel panel-danger">
+	<div id="matchpanel" class="panel panel-success">
 	<div class="panel-heading">Match count</div>
-	<div class="panel-body text-center">
-	<span class="label label-large label-danger" id="matchcount">0</span>
+	<div class="row panel-body text-center">
 	
+	<div class="col-4"><input name="vriset" checked=true type="radio" id="vrimul"/><label for="vrimul">Mulā</label><br/><br/><span class="label label-medium label-danger" id="matchcount_vrimul">0</span></div>
+	<div class="col-4"><input name="vriset" type="radio" id="vriatt"/><label for="vriatt">Aṭṭhakathā</label><br/><br/><span class="label label-medium label-danger" id="matchcount_vriatt">0</span></div>
+	<div class="col-4"><input name="vriset" type="radio" id="vritik"/><label for="vritik">Ṭīkā</label><br/><br/><span class="label label-medium label-danger" id="matchcount_vritik">0</span></div>
+	
+	</div>
 	</div>
 	
 	<div class="col-3"></div>
@@ -13,18 +18,18 @@
 
 </div>
 </div>
+
 <div class="row">
 	<div class="col-1"></div>
 	<div class="col-9">
 		<div class="input-group input-group-lg">
 			 <span class="input-group-addon">Search</span>
-			<input class="form-control" style="font-size:150%" id="tofind" type="text" value="<%=value%>" placeholder="Input romanized Pali word or sentence, with or without diacritic, e.g, raja"></input> 
+			<input class="form-control" style="font-size:150%" id="tofind" type="text" value="<%=value%>" placeholder="Romanized Pali word or sentence, with or without diacritic, e.g, raja"></input> 
 			 <span id="cleartofind" title="Clear Tofind" class="btn btn-danger input-group-addon">×</span>
 		</div>
 	</div>
-	<div class="col-2"><a id="opensearchtab" class="disabled btn btn-primary" disable='true'>Open Search Tab</a></div>
+	<div class="col-2"><a id="openresult" class="disabled btn btn-primary" disable='true'>Show Results</a></div>
 </div>
-
 <div class="row">
 	<div class="col-1"></div>
 	<div class="col-10" id="expanded"> </div>

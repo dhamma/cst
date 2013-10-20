@@ -17,22 +17,26 @@ define(['underscore','backbone',
       }
 
       this.$el.height(height);
-      this.sandbox.emit("resize."+this.groupid,this);
     },
 
-
+    load:function(id) {
+      //should move init.groupid here , but cannot get opts
+    },
     init:function(opts) {
       var that=this;
       this.groupid='G'+Math.round((Math.random()*1000000));
       this.html( _.template(template,{groupid:this.groupid}));
-      setTimeout(function(){
-        that.sandbox.emit("init."+that.groupid,opts);
-      },200);
-      this.resize();
+
+      this.sandbox.on("initialized."+this.groupid,function(id){
+        that.sandbox.emit("init."+that.groupid,id,opts);
+      },this);
     },
     finalize:function() {
       this.sandbox.emit("finalize."+this.groupid);
       this.sandbox.off("resize",this.resize);
+
+      //how to turn load off?
+      //this.sandbox.off("initialized."+this.groupdid,this.load);
       //finalized all subwidget
     },
     initialize: function() {

@@ -5,6 +5,9 @@ TODO
   search "evam me sutam" B
   return A exclude B
   search phrase start with evam me but third is not sutam
+
+
+  search MUL, TIK , ATT at the same time
 */
 define(['underscore','backbone','text!./template.tmpl',
   'text!./candidates.tmpl','text!./expanded.tmpl','text!../config.json'], 
@@ -16,11 +19,17 @@ define(['underscore','backbone','text!./template.tmpl',
       "click .diacritictoken":"diacritictokenclick",
       "click .inputcandidate":"diacritictokenclick",
       "keyup #tofind":"checkenter",
-      "click #opensearchtab":"opensearchtab",
+      "click #openresult":"openresult",
       "click #cleartofind":"cleartofind",
-      "click #prefixwith":"prefixwith"
+      "click #prefixwith":"prefixwith",
+      "click input[name='vriset']":"selectset",
     },
-   
+    selectset:function(e) {
+      $e=$(e.target);
+      var id=$e.attr('id');
+      this.db=id;
+      this.dosearch();
+    },
     removeop:function(val) {
       if (val[val.length-1]=='*') val=val.substring(0,val.length-1);
       return val;
@@ -36,7 +45,7 @@ define(['underscore','backbone','text!./template.tmpl',
       this.$el.find("#tofind").val("").focus();
       this.dosearch();
     },
-    opensearchtab:function() {
+    openresult:function() {
       var tofind=this.$el.find("#tofind").val().trim();
       localStorage.setItem("tofind.cst",tofind);
       var opts={};
@@ -54,7 +63,7 @@ define(['underscore','backbone','text!./template.tmpl',
     checkenter:function(e) {
       if (e.keyCode!=13) return;
 
-      if (this.hitcount) this.opensearchtab();
+      if (this.hitcount) this.openresult();
     },
     replaceends:function(newends) {
       $tofind=this.$el.find("#tofind");
@@ -78,7 +87,7 @@ define(['underscore','backbone','text!./template.tmpl',
     },
     dosearch:function() {
         if (this.timer) clearTimeout(this.timer);
-        this.$el.find("#opensearchtab").addClass('disabled');
+        this.$el.find("#openresult").addClass('disabled');
         var that=this;
         var tofind=that.$("#tofind").val().trim();
         that.expandtoken(tofind);
@@ -87,29 +96,38 @@ define(['underscore','backbone','text!./template.tmpl',
           that.gethitcount(tofind);
         },300);
     },
-    gethitcount:function(tofind) {
-      var that=this;
-      var opts={db:this.db,tofind:tofind,rawcountonly:true};
-      this.sandbox.yase.phraseSearch(opts,function(err,data){
-        $div=that.$el.find("#matchcount");
-        $panel=that.$el.find("#matchpanel");
-        $opensearchtab=that.$el.find("#opensearchtab");
-        $div.html(data);
-        that.hitcount=data;
-        if (data) {
-          $panel.removeClass('panel-danger');
+    showhitcount:function(count,db) {
+       $div=this.$el.find("#matchcount_"+db);
+        $openresult=this.$el.find("#openresult");
+        $div.html(count);
+        if (db==this.db) this.hitcount=count;
+        if (count) {
           $div.addClass('label-success');
-          $panel.addClass('panel-success');
           $div.removeClass('label-danger');
-          $opensearchtab.removeClass('disabled');
+          $openresult.removeClass('disabled');
         } else {
           $div.addClass('label-danger');
           $div.removeClass('label-success');
-          $panel.addClass('panel-danger');
-          $panel.removeClass('panel-success');
-          $opensearchtab.addClass('disabled');
-        }
+          $openresult.addClass('disabled');
+        }      
+    },
+    gethitcount:function(tofind) {
+      var that=this;
+      var opts={db:this.config.db,tofind:tofind,rawcountonly:true};
+      this.sandbox.yase.phraseSearch(opts,function(err,data){
+        that.showhitcount(data,that.config.db);
       });
+
+      for (var i in this.config.linkdb) {
+        opts.db=this.config.linkdb[i];
+        this.sandbox.yase.phraseSearch(opts,
+          (function(db) {
+            return function(err,data){
+             that.showhitcount(data,db);
+            }
+          })(opts.db)
+        );
+      }
     },
     expandtoken:function(val) {
       val=this.removeop(val);

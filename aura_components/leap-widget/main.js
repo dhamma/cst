@@ -1,3 +1,7 @@
+/*
+TODO
+  support partial search of sutta name
+*/
 define(['underscore','backbone','text!./text.tmpl',
   'text!./info.tmpl','text!../config.json',
   '../js/cstinfo','../js/readunit.js','../js/tipitakacustom',], 
