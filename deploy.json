@@ -12,7 +12,8 @@
 		"cst/vrimul.ydb",
 		"cst/vriatt.ydb",
 		"cst/vritik.ydb",
-		"kse/aura_components"
+		"kse/aura_components",
+		"node_modules/pali"
 	],
 	"darwin" :[
 		"cst/run.command"
