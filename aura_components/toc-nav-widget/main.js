@@ -15,9 +15,10 @@ define(['underscore','backbone','../js/cstinfo'
       paragraphunitprefix=paragraphunitprefix.substring(0,paragraphunitprefix.length-1);
 
       var opts2={db:opts.db,yase:this.sandbox.yase,
-        slot:opts.slot,paragraphunit:this.config.paragraphunit};
+        slot:opts.slot,readunit:this.config.readunit,
+        paragraphunit:this.config.paragraphunit};
         cstinfo.slot2paragraph(opts2,function(data){
-          var address=data.value.split('.');
+          var address=data.split('.');
           var start=address[0];
           var pn=address[1];
           scrollto=paragraphunitprefix+'='+pn+']';

@@ -70,10 +70,11 @@ define(function(){
 	}
 
 	var slot2paragraph=function(opts,callback) {
-		var tags=[opts.paragraphunit];
+		var tags=[opts.readunit,opts.paragraphunit];
 		opts.yase.closestTag({db:opts.db,tag:tags,slot:opts.slot},
 		function(err,data2){
-			callback(data2[0]);
+			data2=data2[0];
+			callback(data2[0].value+'.'+data2[1].value);
 		});
 	}
 
