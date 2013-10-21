@@ -127,7 +127,7 @@ define(['underscore','backbone','text!./template.tmpl',
       });
 
       for (var i in this.config.linkdb) {
-        opts.db=this.config.linkdb[i];
+        var opts={db:this.config.linkdb[i],tofind:tofind,rawcountonly:true};
         this.sandbox.yase.phraseSearch(opts,
           (function(db) {
             return function(err,data){
