@@ -153,8 +153,8 @@ define(['underscore','backbone','text!./template.tmpl',
             _.template(candidatetemplate,{candidate:data.raw,count:data.count,more:data.more}));
         
       })
-
-      opts.exact=true;
+      //need a new opts for web
+      var opts={db:this.db,token:val,count:true,exact:true};
       this.sandbox.yase.expandToken(opts,function(err,data){
         var $expanded=that.$el.find("#expanded");
         $expanded.html(" ");
