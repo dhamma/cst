@@ -41,7 +41,7 @@ define(['underscore','backbone',
     },
     initialize: function() {
       this.config=JSON.parse(config);
-      this.viewid="."+this.$el.data('viewid');
+      this.viewid="."+this.options.id;
       this.sandbox.once("init"+ this.viewid,this.init,this);
       this.sandbox.on("resize",this.resize,this);
       this.sandbox.once("finalize"+ this.viewid,this.finalize,this);
