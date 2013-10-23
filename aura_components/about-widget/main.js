@@ -6,8 +6,10 @@ define(['underscore','backbone','text!./template.tmpl','text!../config.json'],
       "click #website":"gowebsite"
     },
     gowebsite:function() {
-      var gui=require('nw.gui');
-      if (gui) gui.Shell.openExternal(this.website);
+      if (typeof process !='undefined' &&process.versions['node-webkit']) {
+        var gui=require('nw.gui');
+        if (gui) gui.Shell.openExternal(this.website);
+      }
       else window.open(this.website,'_blank');
     },
     render:function() {
