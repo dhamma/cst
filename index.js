@@ -12,6 +12,7 @@ define(['underscore','backbone','aura'], function(_,Backbone,Aura) {
     //.use('../node_webkit/auraext/aura-module')    
     .start({ widgets: 'body' }).then(function() {
     	console.log('Aura Started');
+      $("#splashscreen").hide();
     //	app.sandbox.dbname=requirejs('config.json').db;
     })
 
