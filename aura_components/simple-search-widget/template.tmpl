@@ -1,37 +1,36 @@
 
 <div class="row">
-	<div class="col-3"></div>
-	<div class="col-6">
+	<div class="col-md-3"></div>
+	<div class="col-md-6">
 	<div id="matchpanel" class="panel panel-success">
 	<div class="row panel-body text-center">
 	
-	<div class="col-4"><input name="vriset" checked=true type="radio" id="vrimul"/><label for="vrimul">Mulā</label><br/><br/><span class="label label-medium label-danger" id="matchcount_vrimul">0</span></div>
-	<div class="col-4"><input name="vriset" type="radio" id="vriatt"/><label for="vriatt">Aṭṭhakathā</label><br/><br/><span class="label label-medium label-danger" id="matchcount_vriatt">0</span></div>
-	<div class="col-4"><input name="vriset" type="radio" id="vritik"/><label for="vritik">Ṭīkā</label><br/><br/><span class="label label-medium label-danger" id="matchcount_vritik">0</span></div>
+	<div class="col-xs-4"><input name="vriset" checked=true type="radio" id="vrimul"/><label for="vrimul">Mulā</label><br/><span class="btn openresult label-medium label-danger" id="matchcount_vrimul">0</span></div>
+	<div class="col-xs-4"><input name="vriset" type="radio" id="vriatt"/><label for="vriatt">Aṭṭhakathā</label><br/><span class="btn openresult label-medium label-danger" id="matchcount_vriatt">0</span></div>
+	<div class="col-xs-4"><input name="vriset" type="radio" id="vritik"/><label for="vritik">Ṭīkā</label><br/><span class="btn openresult label-medium label-danger" id="matchcount_vritik">0</span></div>
 	
 	</div>
 	</div>
 	
-	<div class="col-3"></div>
+	<div class="col-md-3"></div>
 </div>
 
 </div>
 </div>
 
 <div class="row">
-	<div class="col-1"></div>
-	<div class="col-9">
+	<div class="col-md-1"></div>
+	<div class="col-md-10">
 		<div class="input-group input-group-lg">
 			 <span class="input-group-addon">Search</span>
 			<input class="form-control" style="font-size:150%" id="tofind" type="text" value="<%=value%>" placeholder="Romanized Pali word or sentence, with or without diacritic, e.g, raja"></input> 
 			 <span id="cleartofind" title="Clear Tofind" class="btn btn-danger input-group-addon">×</span>
 		</div>
 	</div>
-	<div class="col-2"><a id="openresult" class="disabled btn btn-primary" disable='true'>Show Results</a></div>
 </div>
 <div class="row" id="searchhelp">
-	<div class="col-2"></div>
-	<div class="col-10">
+	<div class="col-md-2"></div>
+	<div class="col-md-10">
 		<br/><input type="search" value="rasa"> match <b>rasa</b> and <b>rasā</b>
 		<br/><input type="search" value="rasa^"> match <b>rasa</b> but not rasā
 		<br/><input type="search" value="raja*"> match <b>rajakadoṇiyā</b>,<b>rajakaputtaṃ</b> and so on, maximum 30 matches.
@@ -39,11 +38,11 @@
 	 </div>
 </div>
 <div class="row">
-	<div class="col-1"></div>
-	<div class="col-10" id="expanded"> </div>
+	<div class="col-md-1"></div>
+	<div class="col-md-10" id="expanded"> </div>
 </div>
 
 <div class="row">
-	<div class="col-1"></div>
-	<div class="col-10" id="tofindcandidates"> </div>
+	<div class="col-md-1"></div>
+	<div class="col-md-10" id="tofindcandidates"> </div>
 </div>

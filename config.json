@@ -15,9 +15,10 @@
 	"defaulttextwidget":"text-widget@kse",
 	"toc":["nikaya","book","readunit[id]"],
 	"searchtab":[
-		{"widget":"simple-search-widget","name":"Simple Search"}
+		{"widget":"boolean-search-widget","name":"Boolean Search"}
+		,{"widget":"simple-search-widget","name":"Simple Search"}
 		,{"widget":"toc-nav-widget","name":"Table of Content"}
-		,{"widget":"leap-widget","name":"Leap"}
+		,{"widget":"leap-widget","name":"Goto"}
 		,{"widget":"about-widget","name":"About"}
 		
 	]

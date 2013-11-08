@@ -10,19 +10,60 @@ TODO
   search MUL, TIK , ATT at the same time
 */
 define(['underscore','backbone','text!./template.tmpl',
-  'text!./candidates.tmpl','text!./expanded.tmpl','text!../config.json'], 
-  function(_,Backbone,template,candidatetemplate,expandedtemplate,config) {
+  'text!./orphrase.tmpl','text!./newphrase.tmpl','text!../config.json'], 
+  function(_,Backbone,template,orphrasetemplate,newphrasetemplate,config) {
   return {
     type: 'Backbone', 
     events: {
-    	"input #tofind":"dosearch",
       "click .diacritictoken":"diacritictokenclick",
       "click .inputcandidate":"diacritictokenclick",
       "keyup #tofind":"checkenter",
-      "click .openresult":"openresult",
+      "click #openresult":"openresult",
       "click #cleartofind":"cleartofind",
-      "click #prefixwith":"prefixwith",
-      "click input[name='vriset']":"selectset",
+      "click input[name='vriset2']":"selectset",
+      "click #newphrase":"newphrase",
+      "click #removephrase":"removephrase",
+      "click #searchmode":"searchmode",
+      "click #orphrase":"orphrase",
+      "click #removeorphrase":"removeorphrase",
+      "input .tofind":"dosearch"
+    },
+
+    removeorphrase:function(e) {
+      $e=$(e.target);
+      $e.parent().remove();
+      this.dosearch();
+    },
+    orphrase:function(e) {
+      $e=$(e.target);
+      var $input=$e.parent().parent().find("input").last();
+      if ($input.val()) {
+        $input.parent().after(_.template(orphrasetemplate,{}) );  
+      } 
+      $e.parent().parent().find("input").last().focus();
+    },
+    searchmode:function(e) {
+      $e=$(e.target);
+      var mode=$e.data('mode');
+      var text=$e.html();
+      var $btn=$e.parent().parent().parent().find("button");
+      $btn.html(text);
+      $btn.data('mode',mode);
+      this.dosearch();
+    },
+    removephrase:function(e) {
+      $e=$(e.target);
+      $e.parent().parent().remove();
+      this.dosearch();
+    },
+    newphrase:function(e) {
+      $e=$(e.target)
+      var $phrases=this.$el.find("#phrases");
+      var $input=$e.parent().parent().find("input").last();
+      if ($phrases.find("input").last().val()) {
+        $phrases.append(_.template(newphrasetemplate,{}) );  
+      }
+      $phrases.find("input").last().focus();
     },
     selectset:function(e) {
       $e=$(e.target);
@@ -30,29 +71,11 @@ define(['underscore','backbone','text!./template.tmpl',
       this.db=id;
       this.dosearch();
     },
-    removeop:function(val) {
-      if (val[val.length-1]=='*') val=val.substring(0,val.length-1);
-      return val;
-    },
-    prefixwith:function() {
-      $tofind=this.$el.find("#tofind");
-      var val=$tofind.val().trim();
-      val=this.removeop(val);
-      $tofind.val(val+"*");
-      this.dosearch();
-    },
     cleartofind:function() {
       this.$el.find("#tofind").val("").focus();
       this.dosearch();
     },
-    openresult:function(e) {
-      $e=$(e.target);
-      if (!parseInt($e.html())) return;
-
-      var $i=$e.parent().find('input[name="vriset"]');
-      this.selectset({target:$i[0]});
-      $i.attr('checked',true);
-
+    openresult:function() {
       var tofind=this.$el.find("#tofind").val().trim();
       localStorage.setItem("tofind.cst",tofind);
       var opts={};
@@ -79,11 +102,6 @@ define(['underscore','backbone','text!./template.tmpl',
       var tofind=tofind.substring(0, tofind.length-ends.length) +newends+'^ ';
       $tofind.val(tofind);
     },
-    diacritictokenclick:function(e) {
-      $e=$(e.target)
-      this.replaceends($e.html());
-      this.dosearch();
-    },
     getends:function(tofind) {
         var endwith=tofind;
         var lastspace=tofind.lastIndexOf(" ");
@@ -92,21 +110,40 @@ define(['underscore','backbone','text!./template.tmpl',
         }
         return endwith;
     },
+    constructquery:function() {
+      var phrases=this.$el.find("#phrases");
+      var $ip=phrases.find("input");
+      var querygroups=[ [] ];
+      var lastop='';
+
+      for (var i=0;i<$ip.length;i++) {
+        var $i=$($ip[i]);
+        var mode=$i.data('mode');
+        if (mode=='and') {
+          if (querygroups[querygroups.length-1].length) {
+            if (lastop) querygroups.push(lastop);
+            querygroups.push([]);            
+          }
+          lastop=$i.parent().parent().find('button').data('mode');
+        }
+        if ($i.val()) querygroups[querygroups.length-1].push( $i.val());
+      }
+      if (querygroups[querygroups.length-1].length==0) {
+        querygroups.pop();
+      } else {
+        if (lastop) querygroups.push(lastop);  
+      }
+      
+
+      console.log(querygroups)
+    },
     dosearch:function() {
         if (this.timer) clearTimeout(this.timer);
         this.$el.find("#openresult").addClass('disabled');
         var that=this;
-        var tofind=that.$("#tofind").val().trim();
-        if (!tofind) {
-          this.$el.find("#searchhelp").show();
-        } else {
-          this.$el.find("#searchhelp").hide();
-        }
-        that.expandtoken(tofind);
         this.timer=setTimeout(function(){
-          that.expandtoken(that.getends(tofind));
-          that.gethitcount(tofind);
-        },300);
+          that.constructquery();  
+        },800);
     },
     showhitcount:function(count,db) {
        $div=this.$el.find("#matchcount_"+db);
@@ -143,32 +180,6 @@ define(['underscore','backbone','text!./template.tmpl',
           })(opts.db)
         );
       }
-    },
-    expandtoken:function(val) {
-      val=this.removeop(val);
-      var opts={db:this.db,token:val,count:true};
-      var that=this;
-      //
-      //if (val.length<2) return;
-      this.sandbox.yase.expandToken(opts,function(err,data){
-        var $tofindcandidates=that.$el.find("#tofindcandidates")
-        $tofindcandidates.html(" ");
-
-        if (!val) return;
-        if (data.raw.length!=1)
-          that.$el.find("#tofindcandidates").html(
-            _.template(candidatetemplate,{candidate:data.raw,count:data.count,more:data.more}));
-        
-      })
-      //need a new opts for web
-      var opts={db:this.db,token:val,count:true,exact:true};
-      this.sandbox.yase.expandToken(opts,function(err,data){
-        var $expanded=that.$el.find("#expanded");
-        $expanded.html(" ");
-        if (!val) return;
-        if (data.raw[0]!=1 || data.raw[0]!=val)
-          $expanded.html(_.template(expandedtemplate,{expanded:data.raw,count:data.count}));
-      })      
     },
     render:function() {
       this.html(_.template(template,{ value:this.options.value||""}) );
