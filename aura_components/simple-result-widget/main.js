@@ -1,3 +1,6 @@
+/*
+  combine close result (within slot distance)
+*/
 define(['underscore','backbone',
   'text!./text.tmpl','text!../config.json'], 
   function(_,Backbone,template,config) {
