@@ -9,6 +9,12 @@ hl[n="5"] {background:Plum  ;}
 #dicttofind , .resultitem , .bodytext {font-size:120%;}
 readunit {font-size:120%;color:brown;}
 p[n]:hover {background-color:lightyellow;}
+p[n]:before {
+	content:" " attr(n) " ";background-color:lightblue;
+	border-radius: 5px;border-style:solid;border-color:black;
+	border-width: 1px;
+}
+
 
 div[type="sutta"] {font-size:200%;}
 .linkdb.active {color:yellow;}

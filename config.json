@@ -17,8 +17,8 @@
 	"searchtab":[
 		{"widget":"boolean-search-widget","name":"Boolean Search"}
 		,{"widget":"simple-search-widget","name":"Simple Search"}
-		,{"widget":"toc-nav-widget","name":"Table of Content"}
-		,{"widget":"leap-widget","name":"Goto"}
+		,{"widget":"toc-nav-widget","name":"Index of Works"}
+		,{"widget":"leap-widget","name":"Go To"}
 		,{"widget":"about-widget","name":"About"}
 		
 	]

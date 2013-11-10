@@ -23,7 +23,8 @@ define(['underscore','backbone','../js/cstinfo'
           var pn=address[1];
           scrollto=paragraphunitprefix+'='+pn+']';
           var texts=[{db:opts.db,start:readunitprefix+'='+start+']'}];
-          var opts3={texts:texts,scrollto:scrollto,name:start,tofind:opts.tofind}
+          var opts3={texts:texts,scrollto:scrollto,name:start,
+            tofind:opts.tofind,searchtype:opts.searchtype}
           that.sandbox.emit("newreader",opts3);
       })  
     },     

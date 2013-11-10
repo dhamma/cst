@@ -9,19 +9,9 @@ define(['underscore','backbone','text!./template.tmpl','text!../config.json'],
       "keyup #tofind":"checkenter",
       "click .openresult":"openresult",
       "click #cleartofind":"cleartofind",
-      "click input[name='vriset2']":"selectset",
+      //"click input[name='vriset2']":"selectset",
     },
 
-    selectset:function(e) {
-      $e=$(e.target);
-      var id=$e.data('db');
-      this.db=id;
-      this.dosearch();
-    },
-    cleartofind:function() {
-      this.$el.find("#tofind").val("").focus();
-      this.dosearch();
-    },
     tofind2string:function(q) {
       var out="",OP={"followby":"@","notfollowby":"@!","nearby":"~","nearby":"~!"};
       for (var i=0;i<q.length;i++) {
@@ -33,7 +23,11 @@ define(['underscore','backbone','text!./template.tmpl','text!../config.json'],
       }
       return out;
     },
-    openresult:function() {
+    openresult:function(e) {
+      $e=$(e.target);
+      if (!parseInt($e.html())) return;
+      var db=$e.data('db');
+
       var tofind=this.model.get("tofind");
       var distance=this.model.get("distance");
       var opts={};
@@ -42,7 +36,7 @@ define(['underscore','backbone','text!./template.tmpl','text!../config.json'],
       opts.focus=true;
       
       //pass to init of sub-widget
-      opts.extra={db:this.db,tofind:tofind,distance:distance,searchtype:"boolSearch",
+      opts.extra={db:db,tofind:tofind,distance:distance,searchtype:"boolSearch",
                   pagebreak:this.config.pagebreak,
                   toc:this.config.toc,hidenohit:true};
       opts.name=this.tofind2string(tofind);
@@ -69,15 +63,17 @@ define(['underscore','backbone','text!./template.tmpl','text!../config.json'],
         $div.removeClass('label-success');
       }      
     },
-    gethitcount:function(tofind,distance) {
+    gethitcount:function() {
       var that=this;
-      var opts={db:this.config.db,tofind:tofind,distance:distance||2,countonly:true};
+      var tofind=this.model.get("tofind");
+      var distance=this.model.get("distance");
+      var opts={db:this.config.db,tofind:tofind,distance:distance,countonly:true};
       this.sandbox.yase.boolSearch(opts,function(err,data){
         that.showhitcount(data,that.config.db);
       });
 
       for (var i in this.config.linkdb) {
-        var opts={db:this.config.linkdb[i],tofind:tofind,distance:distance||2,countonly:true};
+        var opts={db:this.config.linkdb[i],tofind:tofind,distance:distance,countonly:true};
         this.sandbox.yase.boolSearch(opts,
           (function(db) {
             return function(err,data){
@@ -90,7 +86,7 @@ define(['underscore','backbone','text!./template.tmpl','text!../config.json'],
     newquery:function(tofind,distance) {
       this.model.set("tofind",tofind);
       this.model.set("distance",distance);
-      this.gethitcount(tofind,distance);
+      this.gethitcount();
     },
     render:function() {
       this.html(_.template(template,{ value:this.options.value||""}) );
