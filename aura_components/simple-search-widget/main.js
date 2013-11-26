@@ -13,14 +13,14 @@ define(['underscore','backbone','text!./template.tmpl',
   'text!./candidates.tmpl','text!./expanded.tmpl','text!../config.json'], 
   function(_,Backbone,template,candidatetemplate,expandedtemplate,config) {
   return {
-    type: 'Backbone', 
+    type: 'Backbone.nested', 
     events: {
-    	"input #tofind":"dosearch",
+    	"input #query":"dosearch",
       "click .diacritictoken":"diacritictokenclick",
       "click .inputcandidate":"diacritictokenclick",
-      "keyup #tofind":"checkenter",
+      "keyup #query":"checkenter",
       "click .openresult":"openresult",
-      "click #cleartofind":"cleartofind",
+      "click #clearquery":"clearquery",
       "click #prefixwith":"prefixwith",
       "click input[name='vriset']":"selectset",
     },
@@ -35,14 +35,14 @@ define(['underscore','backbone','text!./template.tmpl',
       return val;
     },
     prefixwith:function() {
-      $tofind=this.$el.find("#tofind");
-      var val=$tofind.val().trim();
+      $query=this.$("#query");
+      var val=$query.val().trim();
       val=this.removeop(val);
-      $tofind.val(val+"*");
+      $query.val(val+"*");
       this.dosearch();
     },
-    cleartofind:function() {
-      this.$el.find("#tofind").val("").focus();
+    clearquery:function() {
+      this.$("#query").val("").focus();
       this.dosearch();
     },
     openresult:function(e) {
@@ -53,18 +53,19 @@ define(['underscore','backbone','text!./template.tmpl',
       this.selectset({target:$i[0]});
       $i.attr('checked',true);
 
-      var tofind=this.$el.find("#tofind").val().trim();
-      localStorage.setItem("tofind.cst",tofind);
+      var query=this.$("#query").val().trim();
+      localStorage.setItem("query.cst",query);
       var opts={};
       opts.tabsid='maintabs';
       opts.widget='simple-result-widget';
       opts.focus=true;
       
       //pass to init of sub-widget
-      opts.extra={db:this.db,tofind:tofind,
+      opts.extra={db:this.db,query:query,
                   pagebreak:this.config.pagebreak,
+                  output:["match","texts","sourceinfo"],
                   toc:this.config.toc,hidenohit:true};
-      opts.name=tofind;
+      opts.name=query;
       this.sandbox.emit("newtab",opts);
     },
     checkenter:function(e) {
@@ -73,44 +74,45 @@ define(['underscore','backbone','text!./template.tmpl',
       if (this.hitcount) this.openresult();
     },
     replaceends:function(newends) {
-      $tofind=this.$el.find("#tofind");
-      var tofind=$tofind.val();
-      var ends=this.getends(tofind);
-      var tofind=tofind.substring(0, tofind.length-ends.length) +newends+'^ ';
-      $tofind.val(tofind);
+      $query=this.$("#query");
+      var query=$query.val();
+      var ends=this.getlastword(query);
+      var query=query.substring(0, query.length-ends.length) +newends+'^ ';
+      $query.val(query);
     },
     diacritictokenclick:function(e) {
       $e=$(e.target)
       this.replaceends($e.html());
       this.dosearch();
     },
-    getends:function(tofind) {
-        var endwith=tofind;
-        var lastspace=tofind.lastIndexOf(" ");
+    getlastword:function(query) {
+        var endwith=query;
+        var lastspace=query.lastIndexOf(" ");
         if (lastspace>-1) {
-          endwith=tofind.substring(lastspace+1);
+          endwith=query.substring(lastspace+1);
         }
         return endwith;
     },
     dosearch:function() {
         if (this.timer) clearTimeout(this.timer);
-        this.$el.find("#openresult").addClass('disabled');
+        this.$("#openresult").addClass('disabled');
         var that=this;
-        var tofind=that.$("#tofind").val().trim();
-        if (!tofind) {
-          this.$el.find("#searchhelp").show();
+        var query=that.$("#query").val().trim();
+        if (!query) {
+          this.$("#searchhelp").show();
         } else {
-          this.$el.find("#searchhelp").hide();
+          this.$("#searchhelp").hide();
         }
-        that.expandtoken(tofind);
+        if (!query) return;
+        that.getTermVariants(query);
         this.timer=setTimeout(function(){
-          that.expandtoken(that.getends(tofind));
-          that.gethitcount(tofind);
+          that.getTermVariants(that.getlastword(query));
+          that.gethitcount(query);
         },300);
     },
     showhitcount:function(count,db) {
-       $div=this.$el.find("#matchcount_"+db);
-        $openresult=this.$el.find("#openresult");
+       $div=this.$("#matchcount_"+db);
+        $openresult=this.$("#openresult");
         $div.html(count);
         
         if (db==this.db) {
@@ -126,15 +128,14 @@ define(['underscore','backbone','text!./template.tmpl',
           $div.removeClass('label-success');
         }      
     },
-    gethitcount:function(tofind) {
-      var that=this;
-      var opts={db:this.config.db,tofind:tofind,rawcountonly:true};
-      this.sandbox.yase.phraseSearch(opts,function(err,data){
-        that.showhitcount(data,that.config.db);
+    gethitcount:function(query) {
+      var opts={db:this.config.db,query:query};
+      this.$yase("search",opts).done(function(data){
+        this.showhitcount(data.doccount,data.opts.db);
       });
-
+      /*
       for (var i in this.config.linkdb) {
-        var opts={db:this.config.linkdb[i],tofind:tofind,rawcountonly:true};
+        var opts={db:this.config.linkdb[i],query:query,rawcountonly:true};
         this.sandbox.yase.phraseSearch(opts,
           (function(db) {
             return function(err,data){
@@ -143,46 +144,48 @@ define(['underscore','backbone','text!./template.tmpl',
           })(opts.db)
         );
       }
+      */
     },
-    expandtoken:function(val) {
+    getTermVariants:function(val) {
       val=this.removeop(val);
-      var opts={db:this.db,token:val,count:true};
+      var opts={db:this.db,term:val,lengths:true};
       var that=this;
       //
       //if (val.length<2) return;
-      this.sandbox.yase.expandToken(opts,function(err,data){
-        var $tofindcandidates=that.$el.find("#tofindcandidates")
-        $tofindcandidates.html(" ");
+      this.sandbox.$yase("getTermVariants",opts).done(function(data){
+        var $querycandidates=that.$("#querycandidates")
+        $querycandidates.html(" ");
 
         if (!val) return;
-        if (data.raw.length!=1)
-          that.$el.find("#tofindcandidates").html(
-            _.template(candidatetemplate,{candidate:data.raw,count:data.count,more:data.more}));
+        if (data.expanded.length!=1)
+          that.$("#querycandidates").html(
+            _.template(candidatetemplate,{candidate:data.expanded,lengths:data.lengths,more:data.more}));
         
       })
       //need a new opts for web
-      var opts={db:this.db,token:val,count:true,exact:true};
-      this.sandbox.yase.expandToken(opts,function(err,data){
-        var $expanded=that.$el.find("#expanded");
+      var opts={db:this.db,term:val,lengths:true,exact:true};
+      this.sandbox.$yase("getTermVariants",opts).done(function(data){
+        var $expanded=that.$("#expanded");
         $expanded.html(" ");
         if (!val) return;
-        if (data.raw[0]!=1 || data.raw[0]!=val)
-          $expanded.html(_.template(expandedtemplate,{expanded:data.raw,count:data.count}));
-      })      
+        if (data.expanded[0]!=1 || data.expanded[0]!=val)
+          $expanded.html(_.template(expandedtemplate,{expanded:data.expanded,lengths:data.lengths}));
+      })
     },
     render:function() {
       this.html(_.template(template,{ value:this.options.value||""}) );
-      this.$el.find("#tofind").focus();
+      this.$("#query").focus();
     },
     initialize: function() {
+      console.log('simple search initialized')
      	this.render();
       var that=this;
       this.model=new Backbone.Model();
       this.config=JSON.parse(config);
       this.db=this.config.db;
-
+     // this.$yase=this.sandbox.$yase.bind(this);
       setTimeout(function(){
-        that.$("#tofind").val(localStorage.getItem("tofind.cst"));
+        that.$("#query").val(localStorage.getItem("query.cst"));
         that.dosearch();
       },100)
     }

@@ -5,7 +5,7 @@ define(['underscore','backbone',
   'text!./text.tmpl','text!../config.json'], 
   function(_,Backbone,template,config) {
   return {
-    type: 'Backbone',
+    type: 'Backbone.ksana',
     events: {
 
     },
