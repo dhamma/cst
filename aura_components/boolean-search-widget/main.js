@@ -9,9 +9,12 @@ define(['underscore','backbone','text!./template.tmpl','text!../config.json'],
       "keyup #tofind":"checkenter",
       "click .openresult":"openresult",
       "click #cleartofind":"cleartofind",
-      //"click input[name='vriset2']":"selectset",
+      "click .btnexample":"setexample"
     },
-
+    setexample:function(e) {
+      $e=$(e.target);
+      this.sandbox.emit("boolsearch.setexample",$e.data('query'));
+    },
     tofind2string:function(q) {
       var out="",OP={"followby":"@","notfollowby":"@!","nearby":"~","nearby":"~!"};
       for (var i=0;i<q.length;i++) {
@@ -44,7 +47,6 @@ define(['underscore','backbone','text!./template.tmpl','text!../config.json'],
     },
     checkenter:function(e) {
       if (e.keyCode!=13) return;
-
       if (this.hitcount) this.openresult();
     },
     showhitcount:function(res,db) {
@@ -84,6 +86,8 @@ define(['underscore','backbone','text!./template.tmpl','text!../config.json'],
       }
     },
     newquery:function(tofind,distance) {
+      if (!tofind) return;
+      if (!tofind.length) return;
       this.model.set("tofind",tofind);
       this.model.set("distance",distance);
       this.gethitcount();
