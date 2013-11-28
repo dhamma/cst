@@ -1,0 +1,11 @@
+<div>
+<%for (var i=0;i<variants.length;i++) {%>
+<span class="inputcandidate label label-info"><%=variants[i].text%></span><%=variants[i].hit%>  
+<%}%>
+<%if (more ){%>
+...more...
+<%}%>
+<%if (variants.length){%>
+<a id="prefixwith" class="btn btn-primary">Include All</a>
+<%}%>
+</div>

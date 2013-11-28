@@ -1,15 +1,22 @@
 /*
   combine close result (within slot distance)
 */
-define(['underscore','backbone',
-  'text!./text.tmpl','text!../config.json'], 
-  function(_,Backbone,template,config) {
+define(['underscore','backbone','text!./template.tmpl'], 
+  function(_,Backbone,template) {
   return {
-    type: 'Backbone.ksana',
+    type: 'Backbone.nested',
     events: {
 
     },
+    commands:{
+      "result.change":"resultchange"
+    },
+    resultchange:function(R) {
+      this.sendChildren("result.change",R);
+    },
     model:new Backbone.Model(),
+    /*
+    move to commands
     resize:function() {
       $el=this.$el;
       var height=$el.parent().height();
@@ -21,34 +28,14 @@ define(['underscore','backbone',
 
       this.$el.height(height);
     },
-
-    load:function(id) {
-      //should move init.groupid here , but cannot get opts
-    },
-    init:function(opts) {
-      var that=this;
-      this.groupid='G'+Math.round((Math.random()*1000000));
-      this.html( _.template(template,{groupid:this.groupid}));
-
-      this.sandbox.on("initialized."+this.groupid,function(id){
-        that.sandbox.emit("init."+that.groupid,id,opts);
-      },this);
-    },
-    finalize:function() {
-      this.sandbox.emit("finalize."+this.groupid);
-      this.sandbox.off("resize",this.resize);
-
-      //how to turn load off?
-      //this.sandbox.off("initialized."+this.groupdid,this.load);
-      //finalized all subwidget
+  */
+    render:function(opts) {
+      this.html( _.template(template));
+      this.addChildren();
     },
     initialize: function() {
-      this.config=JSON.parse(config);
-      this.viewid="."+this.options.id;
-      this.sandbox.once("init"+ this.viewid,this.init,this);
-      this.sandbox.on("resize",this.resize,this);
-      this.sandbox.once("finalize"+ this.viewid,this.finalize,this);
-      this.sandbox.emit("initialized"+this.viewid);
+      this.initNested();
+      this.render();
     }
   };
 });

@@ -15,7 +15,7 @@
 	"defaulttextwidget":"text-widget@kse",
 	"toc":["nikaya","book","readunit[id]"],
 	"searchtab":[
-		{"widget":"simple-search-widget","name":"Simple Search"}
+		{"widget":"main-search-widget","name":"Search"}
 		,{"widget":"toc-nav-widget","name":"Index of Works"}
 		,{"widget":"leap-widget","name":"Go To"}
 		,{"widget":"about-widget","name":"About"}
