@@ -9,26 +9,17 @@ define(['underscore','backbone','text!./template.tmpl'],
 
     },
     commands:{
-      "result.change":"resultchange"
+      "result.change":"resultchange",
+      "needmore":"needmore"
+    },
+    needmore:function(start) {
+      this.sendParent("needmore",start);
     },
     resultchange:function(R) {
-      this.sendChildren("result.change",R);
+      if (R.opts.start==0)this.sendChildren('newresult',R);
+      else this.sendChildren('moreresult',R);
     },
     model:new Backbone.Model(),
-    /*
-    move to commands
-    resize:function() {
-      $el=this.$el;
-      var height=$el.parent().height();
-      while (height<20) {
-        $el=$el.parent();
-        if (!$el) break;
-        height=$el.height();
-      }
-
-      this.$el.height(height);
-    },
-  */
     render:function(opts) {
       this.html( _.template(template));
       this.addChildren();

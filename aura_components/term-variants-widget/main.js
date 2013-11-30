@@ -47,7 +47,7 @@ define(['underscore','backbone','text!./template.tmpl','text!./candidates.tmpl',
         var $expanded=that.$("#expanded");
         $expanded.html(" ");
         if (!val) return;
-        if (data.variants.length>1 || data.variants[0].text!=val)
+        if (data.variants.length>1 || (data.variants.length&&data.variants[0].text!=val))
           $expanded.html(_.template(expandedtemplate,{variants:data.variants}));
       })
     },

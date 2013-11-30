@@ -4,18 +4,25 @@ define(['underscore','backbone','text!./template.tmpl'
   return {
     type: 'Backbone.nested', 
     events: {
-    	"input #query":"dosearch",
       "keyup #query":"checkenter",
       "click .openresult":"openresult",
       "click #clearquery":"clearquery",
       "click #prefixwith":"prefixwith",
     },
     commands:{
-      "query.change":"querychange"
+      "query.change":"querychange",
+      "result.change":"resultchange",
+      "needmore":"needmore"
     },
+    needmore:function(start) {
+      this.sendChildren("more",start);
+    },
+    resultchange:function(res){
+      this.sendAll("result.change",res);
+    },    
     querychange:function(query,db){
       db=db||this.db;
-      this.sendChildren("query.change",query,db);
+      this.sendAll("query.change",query,db);
     },
     selectset:function(e) {
       $e=$(e.target);
@@ -64,10 +71,8 @@ define(['underscore','backbone','text!./template.tmpl'
       if (this.hitcount) this.openresult();
     },
     dosearch:function() {
-        if (this.timer) clearTimeout(this.timer);
         this.$("#openresult").addClass('disabled');
         var that=this;
-        var query=that.$("#query").val().trim();
     },
     showhitcount:function(count,db) {
        $div=this.$("#matchcount_"+db);
