@@ -23,6 +23,8 @@ define(['underscore','backbone','text!./template.tmpl'
     querychange:function(query,db){
       db=db||this.db;
       this.sendAll("query.change",query,db);
+      this.sendAll('settoc',{toc:this.config.toc,db:db,query:query});
+
     },
     selectset:function(e) {
       $e=$(e.target);

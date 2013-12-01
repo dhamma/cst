@@ -7,7 +7,7 @@ define(['underscore','backbone','text!./text.tmpl',
   '../js/cstinfo','../js/readunit.js','../js/tipitakacustom',], 
   function(_,Backbone,template,infotemplate,config,cstinfo,suttanames,custom) {
   return {
-    type: 'Backbone',
+    type: 'Backbone.nested',
     events: {
       "input #pagenumber":"findpagenumber",
       "click .btnversion":"findpagenumber2",
@@ -128,15 +128,18 @@ define(['underscore','backbone','text!./text.tmpl',
     render:function() {
       this.html(_.template(template,{}) );
       this.renderdatalist();
+      this.addChildren();
     },
 
     model:new Backbone.Model(),
     initialize: function() {
+      this.initNested();
       this.config=JSON.parse(config);
       this.db=this.config.db;
       this.model.on("change:suttainfo",this.updateinfo,this);
       this.model.set("version","V"); //default VRI page number
       this.render();
+
     }
   };
 });

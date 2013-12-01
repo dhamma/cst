@@ -1,7 +1,7 @@
 define(['underscore','backbone','text!./template.tmpl','text!../config.json'], 
   function(_,Backbone,template,config) {
   return {
-    type: 'Backbone',
+    type: 'Backbone.nested',
     events: {
       "click #website":"gowebsite"
     },
@@ -18,6 +18,7 @@ define(['underscore','backbone','text!./template.tmpl','text!../config.json'],
     initialize: function() {
       this.config=JSON.parse(config);
       this.render();
+      this.initNested();
       this.website=this.config.website;
     }
   };

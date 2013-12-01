@@ -16,8 +16,11 @@ define(['underscore','backbone','text!./template.tmpl'],
       this.sendParent("needmore",start);
     },
     resultchange:function(R) {
-      if (R.opts.start==0)this.sendChildren('newresult',R);
+      if (R.opts.start==0) {
+        this.sendChildren('newresult',R);
+      }
       else this.sendChildren('moreresult',R);
+      
     },
     model:new Backbone.Model(),
     render:function(opts) {
