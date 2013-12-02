@@ -26,8 +26,7 @@ define(['underscore','backbone','../js/cstinfo'
           var pn=address[1];
           scrollto=paragraphunitprefix+'='+pn+']';
           var texts=[{db:opts.db,start:readunitprefix+'='+start+']'}];
-          var opts3={texts:texts,scrollto:scrollto,name:start,
-            tofind:opts.tofind,searchtype:opts.searchtype}
+          var opts3={texts:texts,scrollto:scrollto,name:start,query:opts.query}
           that.sandbox.emit("newreader",opts3);
       })  
     },     
@@ -36,12 +35,13 @@ define(['underscore','backbone','../js/cstinfo'
       var promise=this.addChildren();
       var opts={db:this.config.db,toc:this.config.toc};
       promise.done(function(){
-        this.sendChildren("settoc",);
+        this.sendChildren("settoc",opts);
       })
     },
     model:new Backbone.Model(),
     initialize: function() {
       this.initNested();
+      this.sandbox.on("gotosource",this.gotosource,this);
       this.config=JSON.parse(config);
       this.render();
     }

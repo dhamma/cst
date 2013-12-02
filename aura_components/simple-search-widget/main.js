@@ -24,6 +24,15 @@ define(['underscore','backbone','text!./template.tmpl',
       "click #prefixwith":"prefixwith",
       "click input[name='vriset']":"selectset",
     },
+    commands:{
+      "gotosource":"gotosource"
+    },
+    gotosource:function(opts) {
+      var extra={db:opts.db,start:opts.slot,scrollto:"",query:opts.query}
+      var query=this.model.get('query');
+      var opts={widget:"text-widget",name:query,extra:extra,focus:true};
+      this.sandbox.emit("newtab",opts);
+    }, 
     selectset:function(e) {
       $e=$(e.target);
       var id=$e.attr('id');

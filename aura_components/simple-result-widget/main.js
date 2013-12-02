@@ -10,8 +10,19 @@ define(['underscore','backbone','text!./template.tmpl'],
     },
     commands:{
       "result.change":"resultchange",
-      "needmore":"needmore"
+      "needmore":"needmore",
+      "gotosource":"gotosource"
     },
+    gotosource:function(opts) {
+      this.sandbox.emit("gotosource",opts);
+      /*
+      var extra={cols:[{db:opts.db,start:opts.slot}],query:opts.query,textwidget:"text-widget@kse"};
+      var query=extra.query;
+
+      var opts={widget:"paralleltext-widget@kse",name:query,extra:extra,focus:true};
+      this.sandbox.emit("newtab",opts);
+      */
+    }, 
     needmore:function(start) {
       this.sendParent("needmore",start);
     },

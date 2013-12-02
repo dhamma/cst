@@ -13,6 +13,8 @@ hl[n="8"] {background:LightSkyBlue;}
 hl[n="9"] {background:Orchid;}
 
 
+slot[expandable='true']:hover {text-decoration: underline;cursor:pointer;background: Tomato }
+
 #dicttofind , .resultitem , .bodytext {font-size:120%;}
 readunit {font-size:120%;color:brown;}
 p[n]:hover {background-color:lightyellow;}
