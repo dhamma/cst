@@ -13,7 +13,6 @@ define(['underscore','backbone','text!./template.tmpl'],
     },
     model:new Backbone.Model(),
     initialize: function() {
-      this.initNested();
       this.render();
     }
   };

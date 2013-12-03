@@ -18,7 +18,6 @@ define(['underscore','backbone','text!./template.tmpl','text!../config.json'],
     initialize: function() {
       this.config=JSON.parse(config);
       this.render();
-      this.initNested();
       this.website=this.config.website;
     }
   };

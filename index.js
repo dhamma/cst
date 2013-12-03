@@ -1,5 +1,7 @@
 define(['underscore','backbone','aura'], function(_,Backbone,Aura) {
- console.log('loading index.js')
+  console.log('loading index.js')
+  
+
   var app=Aura({debug: { enable: false}});
   app.components.addSource('aura', '../node_webkit/auraext');
   app.components.addSource('kse', '../kse/aura_components');

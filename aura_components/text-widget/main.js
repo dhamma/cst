@@ -38,13 +38,12 @@ define(['underscore','backbone','text!./text.tmpl'],
       var that=this;
       this.$el.scrollTop(scrolltop.top);
     },    
-    onAdd:function(extra) {
+    onReady:function(extra) {
       this.db=extra.db;
       this.gotoline(extra.start);
     },
     model:new Backbone.Model(),
     initialize: function() {
-      this.initNested();
       $(window).resize( _.bind(this.resize,this) );
     }
   };

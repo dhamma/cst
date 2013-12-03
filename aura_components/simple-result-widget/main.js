@@ -34,12 +34,10 @@ define(['underscore','backbone','text!./template.tmpl'],
       
     },
     model:new Backbone.Model(),
-    render:function(opts) {
+    render:function() {
       this.html( _.template(template));
-      this.addChildren();
     },
     initialize: function() {
-      this.initNested();
       this.render();
     }
   };

@@ -18,12 +18,12 @@ define(['underscore','backbone','text!./template.tmpl'
       this.sendChildren("more",start);
     },
     resultchange:function(res){
-      this.sendAll("result.change",res);
+      this.sendDescendant("result.change",res);
     },    
     querychange:function(query,db){
       db=db||this.db;
-      this.sendAll("query.change",query,db);
-      this.sendAll('settoc',{toc:this.config.toc,db:db,query:query});
+      this.sendDescendant("query.change",query,db);
+      this.sendDescendant('settoc',{toc:this.config.toc,db:db,query:query});
 
     },
     selectset:function(e) {
@@ -105,9 +105,11 @@ define(['underscore','backbone','text!./template.tmpl'
     render:function() {
       this.html(_.template(template,{ value:this.options.value||""}) );
       this.$("#query").focus();
-      this.addChildren();
-      setTimeout(this.lssearch.bind(this),1000);
+      //setTimeout(this.lssearch.bind(this),1000);
     },
+    onReady:function() {
+    	this.lssearch();
+    },	
     lssearch:function() {
         var lsquery=localStorage.getItem("query.cst");
         this.$("#query").val(lsquery).focus();
@@ -117,9 +119,8 @@ define(['underscore','backbone','text!./template.tmpl'
     initialize: function() {
       this.config=JSON.parse(config);
       this.db=this.config.db;
-      console.log('simple search initialized')
+      console.log('main search initialized')
       this.render();
-      this.initNested(); 
    }
   };
 });

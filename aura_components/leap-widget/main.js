@@ -128,12 +128,9 @@ define(['underscore','backbone','text!./text.tmpl',
     render:function() {
       this.html(_.template(template,{}) );
       this.renderdatalist();
-      this.addChildren();
     },
-
     model:new Backbone.Model(),
     initialize: function() {
-      this.initNested();
       this.config=JSON.parse(config);
       this.db=this.config.db;
       this.model.on("change:suttainfo",this.updateinfo,this);

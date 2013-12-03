@@ -32,15 +32,13 @@ define(['underscore','backbone','../js/cstinfo'
     },     
     render:function() {
       this.html(_.template(template,{}) );
-      var promise=this.addChildren();
+    },
+    onReady:function() {
       var opts={db:this.config.db,toc:this.config.toc};
-      promise.done(function(){
-        this.sendChildren("settoc",opts);
-      })
+      this.sendChildren("settoc",opts);      
     },
     model:new Backbone.Model(),
     initialize: function() {
-      this.initNested();
       this.sandbox.on("gotosource",this.gotosource,this);
       this.config=JSON.parse(config);
       this.render();
