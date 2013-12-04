@@ -12,13 +12,13 @@
 		"sid":"p[sid]",
 		"bpid":"p[n]"
 	},
-	"defaulttextwidget":"text-widget@kse",
+	"defaulttextwidget":"readtext@kse",
 	"toc":["nikaya","book","readunit[id]"],
 	"searchtab":[
-		{"widget":"main-search-widget","name":"Search"}
-		,{"widget":"toc-nav-widget","name":"Index of Works"}
-		,{"widget":"leap-widget","name":"Go To"}
-		,{"widget":"about-widget","name":"About"}
+		{"widget":"main-search","name":"Search"}
+		,{"widget":"toc-nav","name":"Index of Works"}
+		,{"widget":"goto","name":"Go To"}
+		,{"widget":"about","name":"About"}
 		
 	]
 }

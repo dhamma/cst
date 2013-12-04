@@ -1,7 +1,6 @@
 define(['underscore','backbone','aura'], function(_,Backbone,Aura) {
   console.log('loading index.js')
   
-
   var app=Aura({debug: { enable: false}});
   app.components.addSource('aura', '../node_webkit/auraext');
   app.components.addSource('kse', '../kse/aura_components');
@@ -13,9 +12,9 @@ define(['underscore','backbone','aura'], function(_,Backbone,Aura) {
     .use('../node_webkit/auraext/aura-toc')
     //.use('../node_webkit/auraext/aura-module')    
     .start({ widgets: 'body' }).then(function() {
+      console.clear();
     	console.log('Aura Started');
       $("#splashscreen").hide();
-    //	app.sandbox.dbname=requirejs('config.json').db;
     })
 
 });

@@ -30,7 +30,7 @@ define(['underscore','backbone','text!./template.tmpl',
     gotosource:function(opts) {
       var extra={db:opts.db,start:opts.slot,scrollto:"",query:opts.query}
       var query=this.model.get('query');
-      var opts={widget:"text-widget",name:query,extra:extra,focus:true};
+      var opts={widget:"readtext",name:query,extra:extra,focus:true};
       this.sandbox.emit("newtab",opts);
     }, 
     selectset:function(e) {
@@ -66,7 +66,7 @@ define(['underscore','backbone','text!./template.tmpl',
       localStorage.setItem("query.cst",query);
       var opts={};
       opts.tabsid='maintabs';
-      opts.widget='simple-result-widget';
+      opts.widget='simple-result';
       opts.focus=true;
       
       //pass to init of sub-widget

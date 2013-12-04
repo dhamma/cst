@@ -55,7 +55,7 @@ define(['underscore','backbone','text!./template.tmpl'
       localStorage.setItem("query.cst",query);
       var opts={};
       opts.tabsid='maintabs';
-      opts.widget='simple-result-widget';
+      opts.widget='simple-result';
       opts.focus=true;
       
       //pass to init of sub-widget
@@ -119,7 +119,6 @@ define(['underscore','backbone','text!./template.tmpl'
     initialize: function() {
       this.config=JSON.parse(config);
       this.db=this.config.db;
-      console.log('main search initialized')
       this.render();
    }
   };
