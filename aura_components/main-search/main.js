@@ -12,19 +12,27 @@ define(['underscore','backbone','text!./template.tmpl'
     commands:{
       "query.change":"querychange",
       "result.change":"resultchange",
+      "setrange":"setrange",
       "needmore":"needmore"
+    },
+    setrange:function(start,end) {
+      var query=this.model.get("query");
+      this.sendChildren("query.change",{query:query,db:this.db,start:start,end:end});
     },
     needmore:function(start) {
       this.sendChildren("more",start);
     },
     resultchange:function(res){
       this.sendDescendant("result.change",res);
+      if (res.opts.rangestart==0) {
+        this.sendDescendant('settoc',{toc:this.config.toc,db:this.db,query:res.query,hidenohit:true});  
+      }
+      
     },    
     querychange:function(query,db){
       db=db||this.db;
-      this.sendDescendant("query.change",query,db);
-      this.sendDescendant('settoc',{toc:this.config.toc,db:db,query:query});
-
+      this.model.set("query",query);
+      this.sendChildren("query.change",{query:query,db:db});
     },
     selectset:function(e) {
       $e=$(e.target);
@@ -99,9 +107,7 @@ define(['underscore','backbone','text!./template.tmpl'
       this.$yase("search",opts).done(function(data){
         this.showhitcount(data.doccount,data.opts.db);
       });
-
     },
-
     render:function() {
       this.html(_.template(template,{ value:this.options.value||""}) );
       this.$("#query").focus();

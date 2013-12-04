@@ -25,8 +25,10 @@ define(['underscore','backbone','text!./template.tmpl',
       "click input[name='vriset']":"selectset",
     },
     commands:{
-      "gotosource":"gotosource"
+      "gotosource":"gotosource",
+      
     },
+   
     gotosource:function(opts) {
       var extra={db:opts.db,start:opts.slot,scrollto:"",query:opts.query}
       var query=this.model.get('query');
