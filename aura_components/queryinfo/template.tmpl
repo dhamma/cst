@@ -2,10 +2,8 @@
 	<div class="panel-body">
 	<ul class="nav nav-pills">
   <li><a data-toggle="tab" href="#help">Help</a></li>
-  <li><a data-toggle="tab" href="#set">Set</a></li>
-  <li class="active"><a data-toggle="tab" href="#term">Term</a></li>
-  <li><a data-toggle="tab" href="#dict">Dict</a></li>
-  <li><a data-toggle="tab" href="#log">Log</a></li>
+  <li class="active"><a data-toggle="tab" href="#set">Set</a></li>
+  <li><a data-toggle="tab" href="#term">Term</a></li>
 	</ul>
 
 	<div class="tab-content">
@@ -13,11 +11,11 @@
 			<div data-aura-component="search-help"></div>
 		</div>
 
-		<div class="tab-pane" id="set">
-			collections
+		<div class="tab-pane active" id="set">
+			<div data-aura-component="select-db"></div>
 		</div>
 
-		<div class="tab-pane active" id="term">
+		<div class="tab-pane " id="term">
 			<div data-aura-component="term-variants"></div> 
 		</div>		
 	</div>

@@ -9,7 +9,7 @@ define(['underscore','backbone','text!./template.tmpl'],
 
     },
     commands:{
-      "result.change":"resultchange",
+      "querydone":"querydone",
       "needmore":"needmore",
       "gotosource":"gotosource",
       "setrange":"setrange"
@@ -23,7 +23,7 @@ define(['underscore','backbone','text!./template.tmpl'],
     needmore:function(start) {
       this.sendParent("needmore",start);
     },
-    resultchange:function(R) {
+    querydone:function(R) {
       if (R.opts.start==0) {
         this.sendChildren('newresult',R);
       }

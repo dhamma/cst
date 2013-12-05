@@ -8,10 +8,10 @@ define(['underscore','backbone','text!./template.tmpl','text!./candidates.tmpl',
     commands:{
       "query.change":"querychange"
     }, 
-    querychange:function(query,db) {
-      if (db) this.db=db;
-      this.getTermVariants(query);
-      this.getTermVariants(this.getlastword(query));
+    querychange:function(opts) {
+      if (opts.db) this.db=opts.db;
+      this.getTermVariants(opts.query);
+      this.getTermVariants(this.getlastword(opts.query));
     },
     removeop:function(val) {
       if (val[val.length-1]=='*') val=val.substring(0,val.length-1);

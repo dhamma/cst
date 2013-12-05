@@ -14,6 +14,7 @@
 	},
 	"defaulttextwidget":"readtext@kse",
 	"toc":["nikaya","book","readunit[id]"],
+	"dbselector":"select-db",
 	"searchtab":[
 		{"widget":"main-search","name":"Search"}
 		,{"widget":"toc-nav","name":"Index of Works"}

@@ -11,9 +11,20 @@ define(['underscore','backbone','text!./template.tmpl'
     },
     commands:{
       "query.change":"querychange",
-      "result.change":"resultchange",
+      "query.done":"querydone",
+      "setdb":"setdb",
+      "setrank":"setrank",
       "setrange":"setrange",
       "needmore":"needmore"
+    },
+    setdb:function(db) {
+      var query=this.model.get("query");
+      this.db=db;
+      this.sendChildren("query.change",{query:query,db:db});
+    },
+    setrank:function(rank) {
+      var query=this.model.get("query");
+      this.sendChildren("query.change",{query:query,db:this.db,rank:rank});
     },
     setrange:function(start,end) {
       var query=this.model.get("query");
@@ -22,23 +33,17 @@ define(['underscore','backbone','text!./template.tmpl'
     needmore:function(start) {
       this.sendChildren("more",start);
     },
-    resultchange:function(res){
-      this.sendDescendant("result.change",res);
+    querydone:function(res){
+      this.sendDescendant("querydone",res);
       if (res.opts.rangestart==0) {
         this.sendDescendant('settoc',{toc:this.config.toc,db:this.db,query:res.query,hidenohit:true});  
       }
       
     },    
-    querychange:function(query,db){
-      db=db||this.db;
-      this.model.set("query",query);
-      this.sendChildren("query.change",{query:query,db:db});
-    },
-    selectset:function(e) {
-      $e=$(e.target);
-      var id=$e.attr('id');
-      this.db=id;
-      this.dosearch();
+    querychange:function(opts){
+      opts.db=opts.db||this.db;
+      this.model.set("query",opts.query);
+      this.sendChildren("query.change",{query:opts.query,db:opts.db});
     },
     prefixwith:function() {
       $query=this.$("#query");
