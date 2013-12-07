@@ -42,8 +42,9 @@ define(['underscore','backbone','text!./template.tmpl'
     },    
     querychange:function(opts){
       opts.db=opts.db||this.db;
-      this.model.set("query",opts.query);
-      this.sendChildren("query.change",{query:opts.query,db:opts.db});
+      var q=opts.query.toLowerCase().replace(/ṁ/g,'ṃ');
+      this.model.set("query",q);
+      this.sendChildren("query.change",{query:q,db:opts.db});
     },
     prefixwith:function() {
       $query=this.$("#query");
