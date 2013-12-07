@@ -12,12 +12,18 @@ hl[n="7"] {background:LawnGreen;}
 hl[n="8"] {background:LightSkyBlue;}
 hl[n="9"] {background:Orchid;}
 
+div[db="cst:vrimul"]  {background:YellowGreen;}
+div[db="cst:vriatt"]  {background:lightgreen;}
+div[db="cst:vritik"]  {background:Coral;}
+div[db="cst:trans_bpit"]  {background:lightblue;}
+
+
 
 slot[expandable='true']:hover {text-decoration: underline;cursor:pointer;background: Tomato }
 
 #dicttofind , .resultitem , .bodytext {font-size:120%;}
 readunit {font-size:120%;color:brown;}
-p[n]:hover {background-color:lightyellow;}
+
 p[n]:before {
 	content:" " attr(n) " ";background-color:lightblue;
 	border-radius: 5px;border-style:solid;border-color:black;

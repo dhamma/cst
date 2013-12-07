@@ -1,5 +1,6 @@
 	<% for (var i in dbs) { %>
   <label id="<%=dbs[i].name%>"><input data-db="<%=i%>" name="setdb" type="radio"> <%=dbs[i].meta.title%>
   </label>
-  &nbsp;<br/>
+  &nbsp;
+  <%if (linebreak){%><br/><%}%>
 <%}%>

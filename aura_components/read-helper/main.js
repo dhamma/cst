@@ -6,9 +6,11 @@ define(['underscore','backbone','text!./template.tmpl'],
 
     },
     commands:{
-  
+      "selectword":"selectword"
     }, 
-
+    selectword:function(w) {
+      this.$("#msg").html("finding <b>"+w+"</b> , no dictionary installed");
+    },
     render:function() {
       this.html(_.template(template));
     },

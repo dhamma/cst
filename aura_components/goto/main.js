@@ -16,7 +16,19 @@ define(['underscore','backbone','text!./text.tmpl',
       "input .findid":"inputid",
       "click input[name='version']":"changeversion",
       "input #suttaname":"inputsuttaname",
-      "click #clearsuttaname":"clearsuttaname"
+      "click #clearsuttaname":"clearsuttaname",
+      "click #open":"open"
+    },
+    commands:{
+      "setdb":"setdb"
+    },
+    open:function() {
+      var suttainfo=this.model.get("suttainfo");
+      var opts={db:this.db,slot:suttainfo.slot};
+      this.sandbox.emit("gotosource",opts);
+    },
+    setdb:function(db) {
+      this.db=db;
     },
     changeversion:function(e) {
       var ver=$(e.target).data('versionid');
@@ -81,7 +93,7 @@ define(['underscore','backbone','text!./text.tmpl',
 
     },
     pagenumbersample:function() {
-      this.$el.find("input#pagenumber").val("mn1.229");
+      this.$el.find("input#pagenumber").val("mn1.71");
       this.findpagenumber();
     },
     findpagenumber2:function() { //wait for class set active

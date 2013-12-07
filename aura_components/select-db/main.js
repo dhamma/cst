@@ -42,16 +42,17 @@ define(['underscore','backbone','text!./template.tmpl','text!./itemtemplate.tmpl
         dbs[i].hit=0;
         dbs[i].extraclass="label-danger";
       }
-      this.$("#dbs").html(_.template(itemtemplate,{dbs:dbs}) );
-      this.$("#dbs").find("#vrimul").click();
-
+      this.$("#dbs").html(_.template(itemtemplate,{linebreak:this.linebreak,dbs:dbs}) );
+      this.$("#dbs #vrimul input").attr('checked',true);
     } ,   
     render:function() {
-      this.html(template);
+      this.html(_.template(template,{rankcheckbox:this.rankcheckbox}));
     },
     initialize: function() {
       this.model=new Backbone.Model();
       this.model.on("change:dbs",this.showdb,this);
+      this.linebreak=!!this.options.linebreak;
+      this.rankcheckbox=!!this.options.rankcheckbox;
       this.getlocaldb();
       this.render();
     }

@@ -14,7 +14,7 @@ define(['underscore','backbone','text!./template.tmpl','text!./candidates.tmpl',
       this.getTermVariants(this.getlastword(opts.query));
     },
     removeop:function(val) {
-      if (val[val.length-1]=='*') val=val.substring(0,val.length-1);
+      if (val[val.length-1]=='%') val=val.substring(0,val.length-1);
       return val;
     },
     getlastword:function(query) {

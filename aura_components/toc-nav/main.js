@@ -4,10 +4,23 @@ define(['underscore','backbone','../js/cstinfo'
   return {
     type: 'Backbone.nested',
     events: {
-
+      "click #open":"open"
     },
     commands:{
+      "setdb":"setdb",
       "gotosource":"gotosource",
+      "dbslotselected":"dbslotselected",
+    },
+    setdb:function(db){
+      this.db=db;
+      this.onReady();
+    },
+    dbslotselected:function(selected) {
+      this.slot=selected.slot;
+    },
+    open:function() {
+      var opts={db:this.db,slot:this.slot};
+      this.gotosource(opts)
     },
     gotosource:function(opts) {
       /* check multiple call to closed tab*/
@@ -35,13 +48,14 @@ define(['underscore','backbone','../js/cstinfo'
       this.html(_.template(template,{}) );
     },
     onReady:function() {
-      var opts={db:this.config.db,toc:this.config.toc};
+      var opts={db:this.db,toc:this.config.toc};
       this.sendChildren("settoc",opts);      
     },
     model:new Backbone.Model(),
     initialize: function() {
       this.sandbox.on("gotosource",this.gotosource,this);
       this.config=JSON.parse(config);
+      this.db=this.config.db;
       this.render();
     }
   };
