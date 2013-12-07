@@ -20,7 +20,7 @@ define(['underscore','backbone','text!./template.tmpl','text!./itemtemplate.tmpl
     },
     getlocaldb:function(path) {
       var that=this;
-      this.$yase("enumLocalYdb").done(function(data) {
+      this.$yase("enumLocalYdb","cst").done(function(data) {
         this.model.set("dbs",data);
       });
     }, 
