@@ -44,7 +44,8 @@ define(['underscore','backbone','text!./template.tmpl'
       opts.db=opts.db||this.db;
       var q=opts.query.toLowerCase().replace(/ṁ/g,'ṃ');
       this.model.set("query",q);
-      this.sendChildren("query.change",{query:q,db:opts.db});
+      var readunit=this.config.readunit;
+      this.sendChildren("query.change",{query:q,db:opts.db,readunit:readunit});
     },
     prefixwith:function() {
       $query=this.$("#query");
