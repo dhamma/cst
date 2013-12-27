@@ -40,7 +40,7 @@ define(['underscore','backbone','../js/cstinfo'
           scrollto=paragraphunitprefix+'='+pn+']';
 
           var opts3={db:opts.db,start:readunitprefix+'='+start+']'
-      ,scrollto:scrollto,name:start,query:opts.query,paramenu:true}
+      ,scrollto:scrollto,name:start,query:opts.query,paramenu:true,textcomponent:that.config.defaulttextwidget}
           that.sandbox.emit("newreader",opts3);
       })  
     },     
